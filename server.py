@@ -32,6 +32,16 @@ REQUEST_TIMEOUT = 15
 MAX_RETRIES = 3
 SKILLS_DIR = os.path.expanduser("~/.agents/skills")
 
+SERVER_DIR = os.path.dirname(os.path.abspath(__file__))
+VERSION_PATH = os.path.join(SERVER_DIR, "VERSION")
+SERVER_VERSION = "1.2.0"
+if os.path.exists(VERSION_PATH):
+    try:
+        with open(VERSION_PATH, "r") as f:
+            SERVER_VERSION = f.read().strip()
+    except:
+        pass
+
 # ══════════════════════════════════════════════════════════════════════
 #  Rate Limit Tracker
 # ══════════════════════════════════════════════════════════════════════
@@ -219,7 +229,7 @@ def _format_search_results_json(data: dict) -> str:
 # ══════════════════════════════════════════════════════════════════════
 
 # Path relativi al repo
-SERVER_DIR = os.path.dirname(os.path.abspath(__file__))
+# Path (SERVER_DIR già definito sopra)
 SKILL_STRUCTURE_PATH = os.path.join(SERVER_DIR, "data", "skill_structure.json")
 REFRESH_SCRIPT = os.path.join(SERVER_DIR, "scripts", "refresh_structure.py")
 
@@ -717,15 +727,157 @@ def skillsmp_status() -> str:
             "installed": local_count,
             "in_structure": structure_skills,
         },
-        "server_version": "2.0.0",
+        "server_version": SERVER_VERSION,
     }
 
     return json.dumps(result, indent=2, ensure_ascii=False)
 
 
+@mcp.tool(
+    description=(
+        "Confronta una skill locale con la versione su SkillsMP. "
+        "Legge la SKILL.md locale, cerca su SkillsMP, e confronta le descrizioni. "
+        "Restituisce: IDENTICA, SIMILE o DIVERSA con dettagli."
+    )
+)
+def skillsmp_skill_diff(
+    skill_name: str,
+    format: str = "text",
+) -> str:
+    """Confronta skill locale con versione SkillsMP.
+
+    Args:
+        skill_name: Nome della skill (es. 'stripe-integration')
+        format: 'text' o 'json'
+    """
+    # 1. Leggi descrizione locale
+    local_desc = ""
+    local_path = os.path.join(SKILLS_DIR, skill_name, "SKILL.md")
+    if os.path.exists(local_path):
+        try:
+            with open(local_path, "r", encoding="utf-8") as f:
+                content = f.read()
+            import re
+            m = re.search(r'description:\s*"([^"]*)"', content)
+            if m:
+                local_desc = m.group(1)
+            if not local_desc:
+                m = re.search(r'description:\s*([^\n]+)', content)
+                if m:
+                    local_desc = m.group(1).strip()
+        except:
+            pass
+
+    # 2. Cerca su SkillsMP
+    try:
+        data = _cached_or_fetch(f"diff:{skill_name}", f"{API_BASE}/skills/search",
+                                 {"q": skill_name.replace("-", " "), "limit": 5, "sortBy": "stars"})
+    except Exception as e:
+        return json.dumps({"error": str(e)})
+
+    skills = data.get("data", {}).get("skills", [])
+    if not skills:
+        return json.dumps({"skill_name": skill_name, "found": False}) if format == "json" else \
+               f"Skill '{skill_name}' non trovata su SkillsMP."
+
+    # Prendi la prima (piu' stelline)
+    remote = skills[0]
+    remote_desc = remote.get("description", "")
+    remote_stars = remote.get("stars", 0)
+    remote_updated = _format_date(remote.get("updatedAt", ""))
+    remote_author = remote.get("author", "")
+    remote_url = remote.get("skillUrl", "")
+
+    # 3. Confronto
+    local_normalized = local_desc.lower().strip()[:100]
+    remote_normalized = remote_desc.lower().strip()[:100]
+
+    if not local_desc:
+        status = "SOLO_REMOTE"
+        score = 0
+    elif local_normalized == remote_normalized:
+        status = "IDENTICA"
+        score = 1.0
+    elif local_normalized[:50] == remote_normalized[:50]:
+        status = "SIMILE"
+        score = 0.7
+    else:
+        # Similarita' per parole condivise
+        local_words = set(local_normalized.split())
+        remote_words = set(remote_normalized.split())
+        if local_words and remote_words:
+            intersection = local_words & remote_words
+            union = local_words | remote_words
+            score = len(intersection) / len(union) if union else 0
+        else:
+            score = 0
+
+        if score >= 0.5:
+            status = "SIMILE"
+        else:
+            status = "DIVERSA"
+
+    if format == "json":
+        return json.dumps({
+            "skill_name": skill_name,
+            "found": True,
+            "status": status,
+            "similarity_score": round(score, 2),
+            "local": {"description": local_desc[:150] if local_desc else "(non disponibile)"},
+            "remote": {
+                "name": remote.get("name"),
+                "author": remote_author,
+                "stars": remote_stars,
+                "updated": remote_updated,
+                "description": remote_desc[:150],
+                "url": remote_url,
+            },
+        }, indent=2, ensure_ascii=False)
+
+    # Formato testo
+    icon = {"IDENTICA": "✅", "SIMILE": "🟡", "DIVERSA": "🔴", "SOLO_REMOTE": "ℹ️"}.get(status, "❓")
+    lines = [
+        f"## {icon} skillsmp_skill_diff: '{skill_name}'",
+        f"**Stato:** {status} (score: {score:.0%})",
+        "",
+        f"**Locale:** {local_desc[:120] if local_desc else '(nessuna descrizione locale)'}",
+        "",
+        f"**SkillsMP:** by {remote_author} | ⭐ {remote_stars} | 📅 {remote_updated}",
+        f"   {remote_desc[:150]}",
+        f"   🔗 {remote_url}",
+    ]
+    lines.append("")
+    if status == "IDENTICA":
+        lines.append("   ✅ Descrizione identica — skill allineata.")
+    elif status == "DIVERSA":
+        lines.append("   ⚠️ Descrizione diversa — verificare se la skill locale e' aggiornata.")
+    
+    return "\n".join(lines)
+
+
 # ══════════════════════════════════════════════════════════════════════
-#  Avvio
+#  Avvio (con auto-refresh struttura)
 # ══════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
+    # Auto-refresh struttura all'avvio
+    if os.path.exists(REFRESH_SCRIPT):
+        import subprocess
+        try:
+            result = subprocess.run(
+                [sys.executable, REFRESH_SCRIPT, "--merge"],
+                capture_output=True, text=True, timeout=30
+            )
+            if result.returncode == 0:
+                # Ricarica struttura in cache
+                if os.path.exists(SKILL_STRUCTURE_PATH):
+                    with open(SKILL_STRUCTURE_PATH, "r", encoding="utf-8") as f:
+                        _loaded_structure = json.load(f)
+            print(f"[SkillsMP v{SERVER_VERSION}] Auto-refresh: {'OK' if result.returncode == 0 else 'FAILED'}")
+            if result.returncode != 0:
+                print(f"  Error: {result.stderr.strip()}")
+        except Exception as e:
+            print(f"[SkillsMP] Auto-refresh error: {e}")
+
+    print(f"[SkillsMP v{SERVER_VERSION}] Server avviato con 7 tools")
     mcp.run(transport="stdio")

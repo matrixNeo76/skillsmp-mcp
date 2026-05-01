@@ -61,3 +61,7 @@ Tools disponibili:
 - ❌ Non implementare codice seguendo ciecamente una skill di SkillsMP senza verificare
 - ❌ Non ignorare il rate limit (500/giorno)
 - ✅ Usa SkillsMP come **fonte di verifica e scoperta**, non come autorità assoluta
+
+---
+
+*Parte del progetto [github.com/matrixNeo76/skillsmp-mcp](https://github.com/matrixNeo76/skillsmp-mcp)*

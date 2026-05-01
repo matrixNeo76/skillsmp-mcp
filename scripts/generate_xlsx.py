@@ -5,16 +5,21 @@ con dati opzionali da SkillsMP (stelle, date, autore).
 Uso:
   python generate_xlsx.py                          # XLSX base
   python generate_xlsx.py --with-skillsmp          # XLSX con dati SkillsMP
+  python generate_xlsx.py --csv                    # CSV (universale)
+  python generate_xlsx.py --with-skillsmp --csv    # CSV con dati SkillsMP
 """
-import sys, os, json, time, argparse
+import sys, os, json, time, argparse, csv
 sys.stdout.reconfigure(encoding='utf-8')
 os.environ['PYTHONIOENCODING'] = 'utf-8'
 
-from openpyxl import Workbook
-from openpyxl.styles import Font, PatternFill, Alignment, Border, Side, numbers
-from openpyxl.utils import get_column_letter
-from openpyxl.worksheet.datavalidation import DataValidation
-from openpyxl.chart import BarChart, Reference
+try:
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, PatternFill, Alignment, Border, Side, numbers
+    from openpyxl.utils import get_column_letter
+    from openpyxl.worksheet.datavalidation import DataValidation
+    HAS_OPENPYXL = True
+except ImportError:
+    HAS_OPENPYXL = False
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STRUCTURE_PATH = os.path.join(BASE_DIR, 'data', 'skill_structure.json')
@@ -213,19 +218,70 @@ def generate(with_skillsmp=False):
     return skill_counter, total_with_stars
 
 # ── Main ──
+def generate_csv(with_skillsmp=False, output_path=None):
+    """Genera CSV con la stessa struttura dell'XLSX."""
+    if output_path is None:
+        output_path = os.path.join(BASE_DIR, 'docs', 'skill_inventory.csv')
+
+    headers = ['#', 'Nome Skill', 'Dominio', 'Sottodominio', 'Cosa Fa',
+               'Stelle SkillsMP', 'Aggiornamento', 'Autore', 'Da Tenere?', 'Note']
+
+    total_skills = 0
+    total_stars = 0
+
+    with open(output_path, 'w', newline='', encoding='utf-8-sig') as f:
+        writer = csv.writer(f)
+        writer.writerow(headers)
+
+        for domain in structure['domains']:
+            dn = domain['name']
+            for sub in domain['subdomains']:
+                sub_name = sub['name']
+                for skill_name in sub['skills']:
+                    total_skills += 1
+                    desc = get_skill_description(skill_name)
+
+                    if with_skillsmp:
+                        stars, updated, author = fetch_skillsmp(skill_name)
+                        if stars > 0:
+                            total_stars += 1
+                    else:
+                        stars, updated, author = '', '', ''
+
+                    writer.writerow([
+                        total_skills, skill_name, dn, sub_name, desc,
+                        stars, updated, author, '', ''
+                    ])
+
+    return total_skills, total_stars
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Genera skill_inventory.xlsx')
     parser.add_argument('--with-skillsmp', action='store_true',
                        help='Arricchisce con dati SkillsMP (stelle, date, autore)')
     parser.add_argument('--output', default=OUTPUT_PATH, help='Percorso output')
+    parser.add_argument('--csv', action='store_true', help='Esporta come CSV invece di XLSX')
     args = parser.parse_args()
 
-    OUTPUT_PATH = args.output
-    total, stars = generate(with_skillsmp=args.with_skillsmp)
-    print(f'XLSX generato: {OUTPUT_PATH}')
-    print(f'{total} skill in {len(structure["domains"])} domini')
-    print(f'{os.path.getsize(OUTPUT_PATH)} bytes')
-    if args.with_skillsmp:
-        print(f'{stars} skill verificate su SkillsMP')
+    if args.csv:
+        OUTPUT_PATH = args.output.replace('.xlsx', '.csv')
+        total, stars = generate_csv(with_skillsmp=args.with_skillsmp, output_path=OUTPUT_PATH)
+        print(f'CSV generato: {OUTPUT_PATH}')
+        print(f'{total} skill in {len(structure["domains"])} domini')
+        print(f'{os.path.getsize(OUTPUT_PATH)} bytes')
+        if args.with_skillsmp:
+            print(f'{stars} skill verificate su SkillsMP')
+    else:
+        if not HAS_OPENPYXL:
+            print('❌ openpyxl non installato. Usa --csv per output CSV.')
+            sys.exit(1)
+        OUTPUT_PATH = args.output
+        total, stars = generate(with_skillsmp=args.with_skillsmp)
+        print(f'XLSX generato: {OUTPUT_PATH}')
+        print(f'{total} skill in {len(structure["domains"])} domini')
+        print(f'{os.path.getsize(OUTPUT_PATH)} bytes')
+        if args.with_skillsmp:
+            print(f'{stars} skill verificate su SkillsMP')
     print(f'\n  Prossimo passo: python generate_xlsx.py --with-skillsmp')
     print(f'  per arricchire con stelle SkillsMP (richiede API key)')
