@@ -1,5 +1,21 @@
 # Changelog
 
+## v1.2.0 (2026-05-01)
+
+### Added
+- Nuovo tool: `skillsmp_skill_diff` — confronta contenuto locale vs SkillsMP
+  (IDENTICA / SIMILE / DIVERSA con similarity score)
+- Auto-refresh struttura all'avvio del server (--merge)
+- Export CSV oltre a XLSX (flag `--csv` su generate_xlsx.py)
+- Pre-commit hook per auto-refresh prima del commit
+- File VERSION per gestione versioni centralizzata
+- Link al repo GitHub nella SKILL.md
+
+### Changed
+- Versione server letta da file VERSION invece che hardcoded
+- generate_xlsx.py ora funziona anche senza openpyxl (solo CSV)
+- Struttura skill sempre sincronizzata all'avvio del server
+
 ## v1.1.0 (2026-05-01)
 
 ### Added
