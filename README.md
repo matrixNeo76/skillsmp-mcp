@@ -3,7 +3,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://python.org)
 
 MCP server per cercare, confrontare e verificare skill AI su [SkillsMP.com](https://skillsmp.com).
-Integrazione nativa per Craft Agents.
+Integrazione nativa per Craft Agents. Funziona su **Windows**, **macOS** e **Linux**.
 
 ## Tools
 
@@ -17,31 +17,50 @@ Integrazione nativa per Craft Agents.
 
 Tutti i tool supportano `format="json"` per output machine-readable.
 
-## Installazione Rapida
+## Installazione
+
+### Windows (PowerShell)
+
+```powershell
+# 1. Clona il repo
+git clone https://github.com/matrixNeo76/skillsmp-mcp.git
+cd skillsmp-mcp
+
+# 2. Installa (skill + MCP config)
+powershell -ExecutionPolicy Bypass -File setup.ps1
+
+# 3. Inserisci la tua API key SkillsMP quando richiesta
+# 4. Riavvia la sessione Craft Agent
+```
+
+### Linux / macOS (Bash)
 
 ```bash
 # 1. Clona il repo
 git clone https://github.com/matrixNeo76/skillsmp-mcp.git
 cd skillsmp-mcp
 
-# 2. Esegui setup (installa skill + configura MCP)
+# 2. Installa
 bash setup.sh
 
 # 3. Inserisci la tua API key SkillsMP quando richiesta
-#    (ottienila su https://skillsmp.com)
+# 4. Riavvia la sessione Craft Agent
 ```
 
-## Installazione Manuale
+### Installazione Manuale
 
 ```bash
 # 1. Installa dipendenze
 pip install fastmcp httpx openpyxl
 
-# 2. Installa la skill
+# 2. Installa la skill (globale per tutti i workspace)
+#    Windows: %USERPROFILE%\.agents\skills\
+#    Linux:   ~/.agents/skills/
 cp -r skills/skillsmp-checker ~/.agents/skills/
 
-# 3. Configura MCP server (copia in ~/.mcp.json o nella root del progetto)
-#    Vedi esempio in docs/mcp.example.json
+# 3. Configura MCP server
+#    Copia docs/mcp.example.json come ~/.mcp.json
+#    e aggiorna il path assoluto a server.py
 
 # 4. Imposta API key
 export SKILLSMP_API_KEY="sk_live_..."
@@ -52,7 +71,8 @@ export SKILLSMP_API_KEY="sk_live_..."
 ```
 skillsmp-mcp/
 ├── server.py                   ← MCP server (5 tools)
-├── setup.sh                    ← Installer automatico
+├── setup.sh                    ← Installer per Linux/macOS
+├── setup.ps1                   ← Installer per Windows
 ├── pyproject.toml              ← Dipendenze Python
 ├── README.md
 ├── .gitignore
@@ -66,7 +86,8 @@ skillsmp-mcp/
 │   └── show_all_skills.py      ← Mostra skill verificate
 └── docs/
     ├── skillsmp-quickref.md    ← Comandi rapidi
-    └── guide.md                ← Guida al source
+    ├── guide.md                ← Guida al source
+    └── mcp.example.json        ← Esempio config MCP
 ```
 
 ## Scripts
@@ -82,12 +103,40 @@ SKILLSMP_API_KEY="..." python scripts/generate_xlsx.py --with-skillsmp
 SKILLSMP_API_KEY="..." python scripts/show_all_skills.py
 ```
 
+## Configurazione Manuale .mcp.json
+
+Su Windows (`%USERPROFILE%\.mcp.json`):
+```json
+{
+  "mcpServers": {
+    "skillsmp": {
+      "command": "python",
+      "args": ["C:/Users/tuo-user/skillsmp-mcp/server.py"],
+      "env": { "SKILLSMP_API_KEY": "sk_live_..." }
+    }
+  }
+}
+```
+
+Su Linux/macOS (`~/.mcp.json`):
+```json
+{
+  "mcpServers": {
+    "skillsmp": {
+      "command": "python3",
+      "args": ["/home/user/skillsmp-mcp/server.py"],
+      "env": { "SKILLSMP_API_KEY": "sk_live_..." }
+    }
+  }
+}
+```
+
 ## API Key
 
 Ottieni una API key gratuita su [skillsmp.com](https://skillsmp.com).
-- 500 richieste/giorno
-- 30 richieste/minuto
+- 500 richieste/giorno, 30 richieste/minuto
 - Cache adattiva integrata (5-10 min TTL)
+- Retry automatico con exponential backoff
 
 ## Licenza
 

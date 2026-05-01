@@ -1,6 +1,7 @@
 #!/bin/bash
-# setup.sh — Installa SkillsMP MCP Server + Skill per Craft Agents
+# setup.sh — Installa SkillsMP MCP Server + Skill per Craft Agents (Linux/macOS)
 # Uso: bash setup.sh
+# Per Windows: powershell -ExecutionPolicy Bypass -File setup.ps1
 
 set -e
 

@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "skillsmp": {
-      "command": "python3",
-      "args": ["/path/to/skillsmp-mcp/server.py"],
+      "command": "python",
+      "args": ["C:/Users/tuo-user/skillsmp-mcp/server.py"],
       "env": {
         "SKILLSMP_API_KEY": "sk_live_your_api_key_here"
       }
