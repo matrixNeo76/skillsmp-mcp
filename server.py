@@ -38,7 +38,7 @@ except ImportError:
 # ── Config ────────────────────────────────────────────────────────────
 API_BASE = "https://skillsmp.com/api/v1"
 API_KEY = os.environ.get("SKILLSMP_API_KEY", "")
-REQUEST_TIMEOUT = 15
+REQUEST_TIMEOUT = 20
 MAX_RETRIES = 3
 DEFAULT_TTL = 300
 STABLE_TTL = 600
@@ -60,13 +60,13 @@ if os.path.exists(CONFIG_PATH):
         AUTO_REFRESH = _cfg.get("auto_refresh", AUTO_REFRESH)
     except Exception as e:
         print(f"[SkillsMP] Config error: {e}")
-SERVER_VERSION = "1.2.0"
-if os.path.exists(VERSION_PATH):
-    try:
+SERVER_VERSION = "1.4.1"
+try:
+    if os.path.exists(VERSION_PATH):
         with open(VERSION_PATH, "r") as f:
             SERVER_VERSION = f.read().strip()
-    except:
-        pass
+except:
+    pass
 
 # ══════════════════════════════════════════════════════════════════════
 #  Rate Limit Tracker
@@ -794,6 +794,8 @@ def skillsmp_status() -> str:
         },
         "cache": {
             "entries": len(_cache),
+            "persistent_entries": len(_persistent_cache),
+            "persistent_path": PERSISTENT_CACHE_PATH,
             "ttl_seconds": DEFAULT_TTL,
         },
         "skills_local": {
@@ -804,6 +806,38 @@ def skillsmp_status() -> str:
     }
 
     return json.dumps(result, indent=2, ensure_ascii=False)
+
+
+# ── Helper functions per tools MCP ──────────────────────────────
+
+def _format_skill_row(name: str, stars: int, updated: str, author: str) -> str:
+    """Formatta riga skill per output text."""
+    return f"  {name:45s}  ⭐ {int(stars):>6,}  📅 {updated}  👤 {author[:25]:25s}"
+
+
+def _verify_skills_batch(skills_list: list) -> list:
+    """Verifica una lista di skill su SkillsMP."""
+    results = []
+    for sk in skills_list:
+        name = sk["name"] if isinstance(sk, dict) else sk
+        try:
+            data = _cached_or_fetch(f"batch:{name}", f"{API_BASE}/skills/search",
+                                     {"q": name.replace("-", " "), "limit": 3, "sortBy": "stars"})
+            skills = data.get("data",{}).get("skills",[])
+            if skills:
+                s = skills[0]
+                results.append({"name": name, "stars": s.get("stars",0),
+                                "updated": _format_date(s.get("updatedAt","")),
+                                "author": s.get("author",""), "url": s.get("skillUrl",""),
+                                "description": s.get("description","")[:150]})
+        except:
+            pass
+    return results
+
+
+def _timeout_for_tool(tool_name: str) -> int:
+    """Timeout differenziato."""
+    return 30 if tool_name == "ai_search" else REQUEST_TIMEOUT
 
 
 @mcp.tool(
@@ -1207,6 +1241,14 @@ def skillsmp_install_skill(
         github_url: URL raw del file SKILL.md su GitHub
         format: 'text' o 'json'
     """
+    # Valida URL
+    if "github.com" not in github_url and "raw.githubusercontent.com" not in github_url:
+        return json.dumps({"error": "URL deve essere un GitHub raw URL"})
+    if not github_url.endswith(".md") and "SKILL.md" not in github_url:
+        return json.dumps({"error": "URL deve puntare a un file SKILL.md"})
+    if not skill_name or not re.match(r'^[a-z0-9_-]+$', skill_name):
+        return json.dumps({"error": "skill_name deve contenere solo lettere minuscole, numeri, trattini"})
+
     # Crea directory
     install_dir = os.path.join(SKILLS_DIR, skill_name)
     os.makedirs(install_dir, exist_ok=True)

@@ -5,7 +5,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://python.org)
 [![Tests](https://github.com/matrixNeo76/skillsmp-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/matrixNeo76/skillsmp-mcp/actions/workflows/test.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](VERSION)
+[![Version](https://img.shields.io/badge/version-1.4.1-blue.svg)](VERSION)
 
 **MCP server per cercare, confrontare e verificare skill AI su [SkillsMP.com](https://skillsmp.com).**
 Integrazione nativa per Craft Agents. Cross-platform: Windows, macOS, Linux.
@@ -27,6 +27,8 @@ Integrazione nativa per Craft Agents. Cross-platform: Windows, macOS, Linux.
 | `skillsmp_status` | Mostra stato sistema (API, rate limit, cache) |
 | `skillsmp_skill_diff` | Confronta contenuto locale vs SkillsMP |
 | `skillsmp_check_outdated` | Report prioritizzato delle skill piu' obsolete |
+| `skillsmp_discover` | Scopri skill SkillsMP che non hai (per categoria) |
+| `skillsmp_install_skill` | Installa SKILL.md da GitHub in `.agents/skills/` |
 
 Tutti i tool supportano `format="json"` per output machine-readable.
 

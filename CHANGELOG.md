@@ -5,6 +5,40 @@ Tutte le modifiche significative a questo progetto saranno documentate in questo
 Il formato si basa su [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] — 2026-05-02
+
+### Fixed
+- `server.py`: versione hardcoded 1.2.0 → letta da VERSION file (era bloccata a 1.2.0)
+- `import re` spostato in cima al file (era dentro funzione)
+- `import subprocess` e `import csv` duplicati rimossi da funzioni
+- `setup.sh` e `setup.ps1`: resi eseguibili (`chmod +x`)
+
+### Added
+- Supporto `.env` via `python-dotenv` (dipendenza opzionale)
+- `server/utils.py` — modulo utilita' preparato per futuro refactoring
+- 4 nuovi test: search JSON, check_outdated, discover categoria invalida, scan_domain inesistente
+- `ANALYSIS_REPORT.md`: report completo codebase
+
+### Changed
+- `skills/skillsmp-checker/SKILL.md`: aggiornata con tabella completa 11 tools
+- Test suite: da 23 a 27 test
+
+## [1.4.0] — 2026-05-02
+
+### Added
+- **Nuovo tool:** `skillsmp_check_outdated` — report prioritizzato skill obsolete
+- **Nuovo tool:** `skillsmp_discover` — scopri skill SkillsMP non installate
+- **Nuovo tool:** `skillsmp_install_skill` — installa SKILL.md da GitHub
+- **Cache persistente** su file (`data/cache_skillsmp.json`) tra sessioni
+- **46 categorie SkillsMP** esplorabili via `skillsmp_discover`
+- Export CSV da `skillsmp_check_outdated(save_csv=True)`
+- Protezione batch in `generate_xlsx.py`: `--batch-size`, `--yes`, avviso preventivo
+
+### Changed
+- Test suite: da 19 a 23 test
+- `show_all_skills.py`: potenziato con flag `--domain`, `--outdated`, `--format json`, `--limit`
+- Auto-refresh: saltato se struttura ha <1 ora
+
 ## [1.3.0] — 2026-05-01
 
 ### Added

@@ -41,7 +41,7 @@ La versione del progetto e' nel file `VERSION`. Non hardcodare mai versioni.
 # ✅ Corretto
 with open('VERSION') as f: version = f.read().strip()
 # ❌ Sbagliato
-version = "1.3.0"  # hardcoded
+version = "1.4.1"  # hardcoded
 ```
 
 ### 3. I test devono passare prima del push
@@ -84,7 +84,7 @@ python scripts/generate_xlsx.py              # Genera XLSX
 python scripts/generate_xlsx.py --csv        # Genera CSV
 ```
 
-## Strumenti MCP (8)
+## Strumenti MCP (11)
 
 | Tool | Descrizione |
 |------|-------------|
@@ -97,3 +97,5 @@ python scripts/generate_xlsx.py --csv        # Genera CSV
 | `skillsmp_status` | Stato sistema |
 | `skillsmp_skill_diff` | Confronto contenuto |
 | `skillsmp_check_outdated` | Report skill obsolete |
+| `skillsmp_discover` | Scopri skill SkillsMP che non hai |
+| `skillsmp_install_skill` | Installa skill da GitHub |
