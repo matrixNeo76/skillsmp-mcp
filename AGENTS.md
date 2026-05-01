@@ -41,7 +41,7 @@ La versione del progetto e' nel file `VERSION`. Non hardcodare mai versioni.
 # ✅ Corretto
 with open('VERSION') as f: version = f.read().strip()
 # ❌ Sbagliato
-version = "1.2.0"  # hardcoded
+version = "1.3.0"  # hardcoded
 ```
 
 ### 3. I test devono passare prima del push
@@ -96,3 +96,4 @@ python scripts/generate_xlsx.py --csv        # Genera CSV
 | `skillsmp_refresh_structure` | Rigenera struttura |
 | `skillsmp_status` | Stato sistema |
 | `skillsmp_skill_diff` | Confronto contenuto |
+| `skillsmp_check_outdated` | Report skill obsolete |

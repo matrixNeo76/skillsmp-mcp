@@ -5,7 +5,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://python.org)
 [![Tests](https://github.com/matrixNeo76/skillsmp-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/matrixNeo76/skillsmp-mcp/actions/workflows/test.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](VERSION)
+[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](VERSION)
 
 **MCP server per cercare, confrontare e verificare skill AI su [SkillsMP.com](https://skillsmp.com).**
 Integrazione nativa per Craft Agents. Cross-platform: Windows, macOS, Linux.
@@ -26,6 +26,7 @@ Integrazione nativa per Craft Agents. Cross-platform: Windows, macOS, Linux.
 | `skillsmp_refresh_structure` | Rigenera struttura skill dal filesystem locale |
 | `skillsmp_status` | Mostra stato sistema (API, rate limit, cache) |
 | `skillsmp_skill_diff` | Confronta contenuto locale vs SkillsMP |
+| `skillsmp_check_outdated` | Report prioritizzato delle skill piu' obsolete |
 
 Tutti i tool supportano `format="json"` per output machine-readable.
 
@@ -86,7 +87,7 @@ python scripts/show_all_skills.py                            # Mostra skill veri
 
 ```
 skillsmp-mcp/
-├── server.py                   # MCP server (8 tools)
+├── server.py                   # MCP server (9 tools)
 ├── VERSION                     # Versione corrente
 ├── setup.sh / setup.ps1        # Installer cross-platform
 ├── pyproject.toml              # Dipendenze Python
@@ -120,13 +121,25 @@ skillsmp-mcp/
     └── skillsmp-quickref.md    # Comandi rapidi
 ```
 
+## Configurazione
+
+Il server supporta un file `skillsmp-config.json` opzionale nella root del repo:
+```json
+{
+  "cache_ttl": 300,
+  "stable_ttl": 600,
+  "max_retries": 3,
+  "auto_refresh": true
+}
+```
+
 ## API Key
 
 Ottieni una API key gratuita su [skillsmp.com](https://skillsmp.com).
 - **500 richieste/giorno**, 30/minuto
 - **Cache adattiva**: 5 min (default), 10 min (skill >1000 stelle)
 - **Retry**: 3 tentativi con exponential backoff
-- **Auto-refresh**: struttura skill sincronizzata all'avvio
+- **Auto-refresh**: struttura skill sincronizzata all'avvio (saltata se <1 ora)
 
 ## Licenza
 

@@ -5,6 +5,23 @@ Tutte le modifiche significative a questo progetto saranno documentate in questo
 Il formato si basa su [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] — 2026-05-01
+
+### Added
+- **Nuovo tool:** `skillsmp_check_outdated` — scansiona tutte le skill e produce
+  report prioritizzato delle piu' obsolete (parametri: domain, limit, min_stars)
+- **Metadati struttura:** `skill_structure.json` ora include campo `_meta` con
+  versione, timestamp ultimo refresh, conteggi
+- **File di configurazione:** `skillsmp-config.json` opzionale per sovrascrivere
+  cache_ttl, stable_ttl, max_retries, auto_refresh
+- **19 test** (da 14) con integrazione per tools MCP (status, skill_diff, struttura)
+
+### Changed
+- `show_all_skills.py` potenziato: flag `--domain`, `--outdated`, `--format json`, `--limit`
+- Auto-refresh all'avvio: saltato se struttura ha <1 ora
+- ARCHITECTURE.md: aggiornata con 9 tools, configurazione, _meta
+- README.md: aggiornato con 9 tools, configurazione
+
 ## [1.2.0] — 2026-05-01
 
 ### Added
