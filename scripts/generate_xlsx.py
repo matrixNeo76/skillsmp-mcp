@@ -262,7 +262,21 @@ if __name__ == '__main__':
                        help='Arricchisce con dati SkillsMP (stelle, date, autore)')
     parser.add_argument('--output', default=OUTPUT_PATH, help='Percorso output')
     parser.add_argument('--csv', action='store_true', help='Esporta come CSV invece di XLSX')
+    parser.add_argument('--batch-size', type=int, default=0,
+                       help='Limita chiamate API (default: 0 = tutte). Usa con --with-skillsmp')
+    parser.add_argument('-y', '--yes', action='store_true',
+                       help='Salta conferma (non interattivo)')
     args = parser.parse_args()
+
+    if args.with_skillsmp and args.batch_size == 0:
+        total_est = sum(len(sub['skills']) for d in structure['domains'] for sub in d['subdomains'])
+        print(f'⚠️  ATTENZIONE: --with-skillsmp fara ~{total_est} chiamate API SkillsMP')
+        print(f'   (limite giornaliero: 500 richieste)')
+        if not args.yes:
+            confirm = input('   Continuare? (s/N): ')
+            if confirm.lower() != 's':
+                print('Annullato. Usa --batch-size N per limitare le chiamate.')
+                sys.exit(0)
 
     if args.csv:
         OUTPUT_PATH = args.output.replace('.xlsx', '.csv')

@@ -126,22 +126,21 @@ def test_xlsx_script_exists():
     assert os.path.exists(path)
 
 
-def test_server_has_9_tools():
-    """Il server deve avere 9 tools MCP registrati."""
+def test_server_has_minimum_tools():
+    """Il server deve avere almeno 9 tools MCP di base."""
     repo_dir = os.path.dirname(os.path.dirname(__file__))
     sys.path.insert(0, repo_dir)
     from server import mcp
-    tools = mcp._tool_manager.list_tools()
-    assert len(tools) == 9, f'Aspettati 9 tools, trovati {len(tools)}'
-    tool_names = [t.name for t in tools]
-    expected = [
+    tools = [t.name for t in mcp._tool_manager.list_tools()]
+    assert len(tools) >= 9
+    base_expected = [
         'skillsmp_search', 'skillsmp_ai_search', 'skillsmp_check_skill',
         'skillsmp_compare_skills', 'skillsmp_scan_domain',
         'skillsmp_refresh_structure', 'skillsmp_status',
         'skillsmp_skill_diff', 'skillsmp_check_outdated',
     ]
-    for e in expected:
-        assert e in tool_names, f'Tool mancante: {e}'
+    for e in base_expected:
+        assert e in tools, f'Tool mancante: {e}'
 
 
 def test_status_returns_json():
@@ -184,6 +183,18 @@ def test_skill_diff_not_found():
     assert 'error' in data or 'found' in data
 
 
+def test_server_has_11_tools():
+    """Il server deve avere 11 tools MCP."""
+    repo_dir = os.path.dirname(os.path.dirname(__file__))
+    sys.path.insert(0, repo_dir)
+    from server import mcp
+    tools = [t.name for t in mcp._tool_manager.list_tools()]
+    assert len(tools) >= 11, f'Minimo 11 tools, trovati {len(tools)}'
+    expected = ['skillsmp_discover', 'skillsmp_install_skill']
+    for e in expected:
+        assert e in tools, f'Nuovo tool mancante: {e}'
+
+
 def test_server_version_file():
     """File VERSION deve contenere una versione valida."""
     repo_dir = os.path.dirname(os.path.dirname(__file__))
@@ -194,3 +205,34 @@ def test_server_version_file():
     assert len(parts) == 3, f'Versione non semver: {version}'
     for p in parts:
         assert p.isdigit(), f'Parte non numerica: {p}'
+
+
+def test_discover_returns_categories():
+    """skillsmp_discover senza categoria deve restituire l'elenco."""
+    repo_dir = os.path.dirname(os.path.dirname(__file__))
+    sys.path.insert(0, repo_dir)
+    from server import skillsmp_discover
+    import json
+    result = json.loads(skillsmp_discover(list_categories=True, format='json'))
+    assert 'categories' in result
+    assert 'llm-ai' in result['categories']
+
+
+def test_persistent_cache_path():
+    """La cache persistente deve avere un path valido."""
+    repo_dir = os.path.dirname(os.path.dirname(__file__))
+    sys.path.insert(0, repo_dir)
+    from server import PERSISTENT_CACHE_PATH
+    assert 'cache_skillsmp' in PERSISTENT_CACHE_PATH
+    assert PERSISTENT_CACHE_PATH.endswith('.json')
+
+
+def test_categories_dict():
+    """SKILLSMP_CATEGORIES deve avere categorie note."""
+    repo_dir = os.path.dirname(os.path.dirname(__file__))
+    sys.path.insert(0, repo_dir)
+    from server import SKILLSMP_CATEGORIES
+    assert 'llm-ai' in SKILLSMP_CATEGORIES
+    assert 'frontend' in SKILLSMP_CATEGORIES
+    assert 'cloud' in SKILLSMP_CATEGORIES
+    assert len(SKILLSMP_CATEGORIES) >= 40

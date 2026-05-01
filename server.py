@@ -109,6 +109,33 @@ _tracker = RateLimitTracker()
 
 _cache: dict[str, tuple[float, dict]] = {}
 
+# ── Cache persistente su file ────────────────────────────────────
+PERSISTENT_CACHE_PATH = os.path.join(SERVER_DIR, "data", "cache_skillsmp.json")
+
+
+def _load_persistent_cache() -> dict:
+    """Carica cache persistente da file JSON."""
+    if os.path.exists(PERSISTENT_CACHE_PATH):
+        try:
+            with open(PERSISTENT_CACHE_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except:
+            pass
+    return {}
+
+
+def _save_persistent_cache(data: dict):
+    """Salva cache persistente su file JSON."""
+    try:
+        with open(PERSISTENT_CACHE_PATH, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2)
+    except:
+        pass
+
+
+_persistent_cache = _load_persistent_cache()
+
+
 def _get_ttl(data: dict) -> int:
     """TTL piu lungo per skill stabili (tante stelle)."""
     skills = data.get("data", {}).get("skills", [])
@@ -152,27 +179,50 @@ def _api_call(url: str, params: dict) -> dict:
 
 
 def _cached_or_fetch(cache_key: str, url: str, params: dict) -> dict:
-    """Helper con cache adattiva."""
+    """Helper con cache adattiva + persistente su file."""
     now = time.time()
+
+    # 1. Controlla cache in-memory
     if cache_key in _cache:
         ts, data = _cache[cache_key]
         if now - ts < _get_ttl(data):
             return data
 
+    # 2. Controlla cache persistente
+    if cache_key in _persistent_cache:
+        entry = _persistent_cache[cache_key]
+        expires = entry.get("expires_at", 0)
+        if now < expires:
+            data = entry.get("data", {})
+            _cache[cache_key] = (time.time(), data)
+            return data
+
     try:
         data = _api_call(url, params)
+        ttl = _get_ttl(data)
         _cache[cache_key] = (time.time(), data)
+        # Salva in cache persistente
+        _persistent_cache[cache_key] = {
+            "data": data,
+            "expires_at": time.time() + ttl,
+            "cached_at": time.time(),
+        }
+        _save_persistent_cache(_persistent_cache)
         return data
     except httpx.HTTPStatusError as e:
-        # Usa cache scaduta se disponibile come fallback
+        # Fallback a qualsiasi cache disponibile
         if cache_key in _cache:
             ts, data = _cache[cache_key]
             return data
+        if cache_key in _persistent_cache:
+            return _persistent_cache[cache_key]["data"]
         raise
     except httpx.RequestError as e:
         if cache_key in _cache:
             ts, data = _cache[cache_key]
             return data
+        if cache_key in _persistent_cache:
+            return _persistent_cache[cache_key]["data"]
         raise
 
 
@@ -881,6 +931,7 @@ def skillsmp_check_outdated(
     domain: Optional[str] = None,
     limit: int = 20,
     min_stars: int = 1000,
+    save_csv: bool = False,
     format: str = "text",
 ) -> str:
     """Trova le skill locali piu' obsolete su SkillsMP.
@@ -889,6 +940,7 @@ def skillsmp_check_outdated(
         domain: Filtra per dominio (es. '7. SECURITY')
         limit: Max risultati (default 20, max 100)
         min_stars: Stelle minime SkillsMP per considerare la skill (default 1000)
+        save_csv: Se True, salva il report come CSV in docs/
         format: 'text' o 'json'
     """
     # Carica struttura
@@ -961,7 +1013,234 @@ def skillsmp_check_outdated(
         lines.append(f"  {sk['name']:45s}  ⭐ {int(sk['stars']):>6,}  📅 {sk['updated']}  👤 {sk['author'][:25]:25s}")
     lines.append("")
     lines.append(f"🏆 Le {min(limit, len(outdated))} skill piu' popolari su SkillsMP (da considerare per update)")
+
+    # Salva come CSV se richiesto
+    if save_csv and outdated:
+        import csv as csv_mod
+        from datetime import datetime as dt_mod
+        csv_path = os.path.join(SERVER_DIR, "docs", f"outdated_{dt_mod.now().strftime('%Y%m%d_%H%M%S')}.csv")
+        try:
+            with open(csv_path, "w", newline="", encoding="utf-8-sig") as f:
+                w = csv_mod.writer(f)
+                w.writerow(["Nome Skill", "Dominio", "Stelle SkillsMP", "Ultimo Aggiornamento", "Autore", "URL"])
+                for sk in outdated:
+                    w.writerow([sk["name"], sk["domain"], sk["stars"], sk["updated"], sk["author"], sk.get("url", "")])
+            lines.append(f"   💾 Salvato: {csv_path}")
+        except Exception as e:
+            lines.append(f"   ❌ Errore salvataggio CSV: {e}")
+
     return "\n".join(lines)
+
+
+# ── Categorie SkillsMP ───────────────────────────────────────────
+SKILLSMP_CATEGORIES = {
+    "payment": "Pagamenti e fatturazione",
+    "ecommerce": "E-commerce",
+    "sales-marketing": "Sales & Marketing",
+    "project-management": "Project Management",
+    "finance-investment": "Finance & Investment",
+    "backend": "Backend Development",
+    "frontend": "Frontend Development",
+    "full-stack": "Full Stack",
+    "mobile": "Mobile Development",
+    "architecture-patterns": "Architecture Patterns",
+    "gaming": "Game Development",
+    "llm-ai": "LLM & AI",
+    "machine-learning": "Machine Learning",
+    "data-engineering": "Data Engineering",
+    "data-analysis": "Data Analysis",
+    "testing": "Testing",
+    "security": "Security",
+    "code-quality": "Code Quality",
+    "cicd": "CI/CD",
+    "cloud": "Cloud",
+    "containers": "Containers",
+    "devops": "DevOps",
+    "git-workflows": "Git Workflows",
+    "monitoring": "Monitoring",
+    "sql-databases": "SQL Databases",
+    "nosql-databases": "NoSQL Databases",
+    "database-tools": "Database Tools",
+    "smart-contracts": "Smart Contracts",
+    "web3-tools": "Web3 Tools",
+    "defi": "DeFi",
+    "content-creation": "Content Creation",
+    "design": "Design",
+    "media": "Media",
+    "documents": "Documents",
+    "technical-docs": "Technical Docs",
+    "education": "Education",
+    "knowledge-base": "Knowledge Base",
+    "productivity-tools": "Productivity & Integration",
+    "automation-tools": "Automation Tools",
+    "debugging": "Debugging",
+    "system-admin": "System Administration",
+    "cli-tools": "CLI Tools",
+    "ide-plugins": "IDE Plugins",
+    "domain-utilities": "Domain & DNS Tools",
+}
+
+
+@mcp.tool(
+    description=(
+        "Scopre skill su SkillsMP che NON hai nella tua installazione locale. "
+        "Cerca per categoria SkillsMP e mostra quelle che non sono in skill_structure.json. "
+        "Usa list_categories=True per vedere le categorie disponibili."
+    )
+)
+def skillsmp_discover(
+    category: Optional[str] = None,
+    list_categories: bool = False,
+    min_stars: int = 5000,
+    limit: int = 10,
+    format: str = "text",
+) -> str:
+    """Scopri skill SkillsMP che non hai localmente.
+
+    Args:
+        category: Categoria SkillsMP (es. 'llm-ai', 'frontend', 'cicd')
+        list_categories: Se True, mostra le categorie disponibili
+        min_stars: Stelle minime per filtrare (default 5000)
+        limit: Max risultati (default 10)
+        format: 'text' o 'json'
+    """
+    if list_categories or not category:
+        if format == "json":
+            return json.dumps({"categories": SKILLSMP_CATEGORIES}, indent=2, ensure_ascii=False)
+        lines = ["## 📂 Categorie SkillsMP", ""]
+        for slug, desc in sorted(SKILLSMP_CATEGORIES.items()):
+            lines.append(f"  {slug:30s} — {desc}")
+        lines.append("")
+        lines.append("Usa: skillsmp_discover(category='llm-ai', min_stars=5000)")
+        return "\n".join(lines)
+
+    if category not in SKILLSMP_CATEGORIES:
+        return json.dumps({"error": f"Categoria '{category}' non valida",
+                           "available": list(SKILLSMP_CATEGORIES.keys())})
+
+    # Carica skill locali
+    local_skills = set()
+    try:
+        with open(SKILL_STRUCTURE_PATH, "r", encoding="utf-8") as f:
+            struct = json.load(f)
+        for dom in struct.get("domains", []):
+            for sub in dom.get("subdomains", []):
+                for sk in sub.get("skills", []):
+                    local_skills.add(sk if isinstance(sk, str) else sk.get("name", ""))
+    except:
+        pass
+
+    # Cerca su SkillsMP per categoria
+    try:
+        data = _cached_or_fetch(f"discover:{category}", f"{API_BASE}/skills/search",
+                                 {"q": category, "category": category, "limit": 50, "sortBy": "stars"})
+    except Exception as e:
+        return json.dumps({"error": str(e)})
+
+    skills = data.get("data", {}).get("skills", [])
+    new_skills = [s for s in skills if s.get("name") not in local_skills and s.get("stars", 0) >= min_stars]
+    new_skills.sort(key=lambda x: x.get("stars", 0), reverse=True)
+    new_skills = new_skills[:limit]
+
+    if format == "json":
+        return json.dumps({
+            "category": category,
+            "total_on_skillsmp": len(skills),
+            "new_discovered": len(new_skills),
+            "skills": [
+                {
+                    "name": s.get("name"),
+                    "author": s.get("author"),
+                    "stars": s.get("stars", 0),
+                    "updated": _format_date(s.get("updatedAt", "")),
+                    "description": s.get("description", "")[:150],
+                    "url": s.get("skillUrl", ""),
+                }
+                for s in new_skills
+            ],
+        }, indent=2, ensure_ascii=False)
+
+    if not new_skills:
+        return f"Nessuna skill nuova trovata nella categoria '{category}' (min ⭐{min_stars})."
+
+    lines = [
+        f"## 🆕 Scoperte nella categoria '{category}' ({SKILLSMP_CATEGORIES.get(category, '')})",
+        f"Trovate {len(new_skills)} skill nuove (non nella tua installazione)",
+        "",
+    ]
+    for s in new_skills:
+        stars = s.get("stars", 0)
+        updated = _format_date(s.get("updatedAt", ""))
+        author = s.get("author", "")
+        desc = s.get("description", "")[:100]
+        lines.append(f"  ⭐ {int(stars):>6,} | {s['name']} — by {author}")
+        lines.append(f"     {desc}")
+        lines.append(f"     📅 {updated}  🔗 {s.get('skillUrl', '')}")
+        lines.append("")
+
+    return "\n".join(lines)
+
+
+@mcp.tool(
+    description=(
+        "Installa una skill da GitHub in .agents/skills/. "
+        "Scarica il file SKILL.md dal repository GitHub e lo installa localmente. "
+        "Dopo l'installazione, aggiorna la struttura skill."
+    )
+)
+def skillsmp_install_skill(
+    skill_name: str,
+    github_url: str,
+    format: str = "text",
+) -> str:
+    """Installa una skill da GitHub.
+
+    Args:
+        skill_name: Nome della skill (es. 'my-new-skill')
+        github_url: URL raw del file SKILL.md su GitHub
+        format: 'text' o 'json'
+    """
+    # Crea directory
+    install_dir = os.path.join(SKILLS_DIR, skill_name)
+    os.makedirs(install_dir, exist_ok=True)
+
+    # Scarica SKILL.md
+    try:
+        resp = httpx.get(github_url, timeout=15)
+        resp.raise_for_status()
+        content = resp.text
+    except Exception as e:
+        return json.dumps({"error": f"download fallito: {str(e)}"})
+
+    # Salva
+    skill_path = os.path.join(install_dir, "SKILL.md")
+    try:
+        with open(skill_path, "w", encoding="utf-8") as f:
+            f.write(content)
+    except Exception as e:
+        return json.dumps({"error": f"salvataggio fallito: {str(e)}"})
+
+    # Aggiorna struttura
+    if os.path.exists(REFRESH_SCRIPT):
+        import subprocess
+        try:
+            subprocess.run([sys.executable, REFRESH_SCRIPT, "--merge"],
+                          capture_output=True, text=True, timeout=30)
+        except:
+            pass
+
+    if format == "json":
+        return json.dumps({
+            "success": True,
+            "skill_name": skill_name,
+            "installed_at": install_dir,
+            "bytes": len(content),
+        }, indent=2, ensure_ascii=False)
+
+    return f"""## ✅ Skill installata: '{skill_name}'
+   Path: {install_dir}
+   Dimensione: {len(content)} bytes
+   Struttura skill aggiornata."""
 
 
 # ══════════════════════════════════════════════════════════════════════

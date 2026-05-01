@@ -1,0 +1,80 @@
+{
+  "diff:questa-skill-non-esiste-mai": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "davideg25-sf-ai-skills-skills-comprimi-pdf-skill-md",
+            "name": "comprimi-pdf",
+            "author": "DavideG25",
+            "description": "Comprime PDF pesanti riducendone le dimensioni, ideale per PDF scansionati o firmati digitalmente che non si riescono a mandare per email. Usa questa skill ogni volta che l'utente carica un PDF e chiede di comprimerlo, ridurlo, alleggerirlo, o dice che e troppo grande per la mail. Trigger tipici: comprimimi questo pdf, e troppo grande, riduci il pdf, non riesco a mandarlo per email, alleggerisci questo file.",
+            "githubUrl": "https://github.com/DavideG25/sf-ai-skills/tree/master/skills/comprimi-pdf",
+            "skillUrl": "https://skillsmp.com/skills/davideg25-sf-ai-skills-skills-comprimi-pdf-skill-md",
+            "stars": 0,
+            "updatedAt": "1774774127"
+          },
+          {
+            "id": "ilariagonzales86-ai-grimoria-site-skills-cosmos-infographic-skill-md",
+            "name": "cosmos-infographic",
+            "author": "ilariagonzales86-ai",
+            "description": "Skill per generare infografiche e visual nel sistema visivo Cosmos di GrimorIa. Usa questa skill OGNI VOLTA che l'utente chiede di creare un'infografica, un visual, una mappa visiva, una grafica per Instagram o Substack, un diagramma di Human Design o Gene Keys o astrologia, un visual per pitch o presentazione client, una chart esoterica, una mappa del profilo energetico, un poster visivo, un visual da condividere sui social o da mostrare a un cliente. Attiva anche quando l'utente dice 'crea un'infografica', 'fammi un visual', 'voglio una grafica', 'diagramma HD', 'mappa visiva del profilo GK', 'visual per Instagram', 'grafica per Substack', 'infografica zodiacale', 'visual per pitch', 'crea un poster', 'grafica del corpo grafico', 'mappa astrologica visiva', 'visual per il cliente', o qualsiasi richiesta che implichi tradurre dati esoterici, profilazioni energetiche o contenuti strategici in una composizione visiva. NON usare per: analisi del tema natale o del bodygraph (usa astro-hd-gk-profiler), produzione",
+            "githubUrl": "https://github.com/ilariagonzales86-ai/grimoria-site/tree/main/skills/cosmos-infographic",
+            "skillUrl": "https://skillsmp.com/skills/ilariagonzales86-ai-grimoria-site-skills-cosmos-infographic-skill-md",
+            "stars": 0,
+            "updatedAt": "1775815029"
+          },
+          {
+            "id": "ilariagonzales86-ai-grimoria-site-skills-substack-knowledge-db-skill-md",
+            "name": "substack-knowledge-db",
+            "author": "ilariagonzales86-ai",
+            "description": "Skill per gestire il database di conoscenza delle newsletter Substack. Usa questa skill OGNI VOLTA che l'utente chiede di: ingerire/scaricare/aggiornare i post delle newsletter Substack, interrogare il database delle newsletter ('cosa dice X su Y?', 'chi parla di Z?', 'trend della settimana'), gestire i feed seguiti (aggiungere autore, rimuovere, lista feed, stats). NON usare per scrivere Note Substack (usa substack-notes-writer), per analisi carte natali (usa astro-hd-gk-profiler), o per il Magazine HTML (substack_summarizer).",
+            "githubUrl": "https://github.com/ilariagonzales86-ai/grimoria-site/tree/main/skills/substack-knowledge-db",
+            "skillUrl": "https://skillsmp.com/skills/ilariagonzales86-ai-grimoria-site-skills-substack-knowledge-db-skill-md",
+            "stars": 0,
+            "updatedAt": "1775891819"
+          },
+          {
+            "id": "ilariagonzales86-ai-grimoria-site-skills-substack-notes-writer-skill-md",
+            "name": "substack-notes-writer",
+            "author": "ilariagonzales86-ai",
+            "description": "Skill per generare Note Substack nel tono di voce GrimorIa. Usa questa skill OGNI VOLTA che l'utente chiede di scrivere Note per Substack, generare contenuti per Substack Notes, creare post brevi per Substack, o cercare trend per scrivere Note. Attiva anche quando l'utente dice 'scrivi note substack', 'genera note', 'note per questa settimana', 'note dalla newsletter', 'cerca trend e scrivi note', 'note su [tema]', 'contenuti substack', 'frammenti dal cantiere', o qualsiasi richiesta che implichi la creazione di Note brevi per Substack nel tono GrimorIa. NON usare per scrivere newsletter complete (usa il framework FVIA manualmente), per analisi di carte natali (usa astro-hd-gk-profiler), o per contenuti non-Substack (Instagram, email, sales page).",
+            "githubUrl": "https://github.com/ilariagonzales86-ai/grimoria-site/tree/main/skills/substack-notes-writer",
+            "skillUrl": "https://skillsmp.com/skills/ilariagonzales86-ai-grimoria-site-skills-substack-notes-writer-skill-md",
+            "stars": 0,
+            "updatedAt": "1775719686"
+          },
+          {
+            "id": "masterdd-l34d-game-flint-narrative-skill-skill-md",
+            "name": "caveman-mode",
+            "author": "MasterDD-L34D",
+            "description": "Aggiungi un blocco \"caveman\" a fine risposta per tenere Master in moto su Evo-Tactics. USA QUESTA SKILL quando (a) Master chiude un task/sprint/milestone (\"fatto\", \"pushato\", \"finito\", \"done\", \"chiuso\"), (b) Master mostra segnali di blocco o stanchezza (\"non ne posso pi\u00f9\", \"sono bloccato\", \"non so cosa fare\", \"uff\", \"basta\", \"mi sa che mollo\", messaggi brevi e demotivati), (c) Master chiede esplicitamente \"caveman\", \"modalit\u00e0 caveman\", \"caveman mode\", \"dammi un caveman\". USA ANCHE se Master sta iterando su Evo-Tactics da un po' e noti che la conversazione \u00e8 diventata densa di infrastruttura/ codice senza riferimenti al gameplay \u2014 il caveman aiuta a riancorare. NON usare a ogni risposta: max 1 ogni 3-4 turni. Se Master dice \"basta caveman\", smetti SUBITO per tutta la sessione.",
+            "githubUrl": "https://github.com/MasterDD-L34D/Game/tree/main/flint-narrative-skill",
+            "skillUrl": "https://skillsmp.com/skills/masterdd-l34d-game-flint-narrative-skill-skill-md",
+            "stars": 0,
+            "updatedAt": "1776472871"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 5,
+          "total": 613,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "questa skill non esiste mai",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "9c197191-ffaa-463a-acc7-e16a127246da",
+        "responseTimeMs": 7
+      }
+    },
+    "expires_at": 1777676685.9297993,
+    "cached_at": 1777676385.9297993
+  }
+}
