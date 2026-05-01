@@ -65,7 +65,7 @@ try:
     if os.path.exists(VERSION_PATH):
         with open(VERSION_PATH, "r") as f:
             SERVER_VERSION = f.read().strip()
-except:
+except Exception:
     pass
 
 # ══════════════════════════════════════════════════════════════════════
@@ -129,7 +129,7 @@ def _load_persistent_cache() -> dict:
         try:
             with open(PERSISTENT_CACHE_PATH, "r", encoding="utf-8") as f:
                 return json.load(f)
-        except:
+        except Exception:
             pass
     return {}
 
@@ -139,7 +139,7 @@ def _save_persistent_cache(data: dict):
     try:
         with open(PERSISTENT_CACHE_PATH, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
-    except:
+    except Exception:
         pass
 
 
@@ -237,6 +237,7 @@ def _cached_or_fetch(cache_key: str, url: str, params: dict) -> dict:
 
 
 def _format_date(updated: str) -> str:
+    """Converte timestamp SkillsMP in data YYYY-MM-DD."""
     if not updated:
         return "-"
     try:
@@ -641,7 +642,7 @@ def skillsmp_scan_domain(
                 else:
                     results.append({"name": sk["name"], "subdomain": sk["subdomain"],
                                     "stars": 0})
-            except:
+            except Exception:
                 results.append({"name": sk["name"], "subdomain": sk["subdomain"], "error": "failed"})
 
         out = {
@@ -673,7 +674,7 @@ def skillsmp_scan_domain(
                 lines.append(f"  {sk['name']:40s}  ⭐ {int(stars):>6,}  📅 {updated}  👤 {author[:25]:25s}")
             else:
                 lines.append(f"  {sk['name']:40s}  [non trovata su SkillsMP]")
-        except:
+        except Exception:
             lines.append(f"  {sk['name']:40s}  [errore]")
 
     lines.append("")
@@ -773,7 +774,7 @@ def skillsmp_status() -> str:
                 struct = json.load(f)
             structure_skills = sum(len(s["skills"]) for d in struct.get("domains", [])
                                    for s in d.get("subdomains", []))
-        except:
+        except Exception:
             pass
 
     now = dt.datetime.now()
@@ -830,7 +831,7 @@ def _verify_skills_batch(skills_list: list) -> list:
                                 "updated": _format_date(s.get("updatedAt","")),
                                 "author": s.get("author",""), "url": s.get("skillUrl",""),
                                 "description": s.get("description","")[:150]})
-        except:
+        except Exception:
             pass
     return results
 
@@ -871,7 +872,7 @@ def skillsmp_skill_diff(
                 m = re.search(r'description:\s*([^\n]+)', content)
                 if m:
                     local_desc = m.group(1).strip()
-        except:
+        except Exception:
             pass
 
     # 2. Cerca su SkillsMP
@@ -1026,7 +1027,7 @@ def skillsmp_check_outdated(
                         "author": author,
                         "url": s.get("skillUrl", ""),
                     })
-        except:
+        except Exception:
             pass
 
     # Ordina per stelle (decrescente)
@@ -1168,7 +1169,7 @@ def skillsmp_discover(
             for sub in dom.get("subdomains", []):
                 for sk in sub.get("skills", []):
                     local_skills.add(sk if isinstance(sk, str) else sk.get("name", ""))
-    except:
+    except Exception:
         pass
 
     # Cerca su SkillsMP per categoria
@@ -1274,7 +1275,7 @@ def skillsmp_install_skill(
         try:
             subprocess.run([sys.executable, REFRESH_SCRIPT, "--merge"],
                           capture_output=True, text=True, timeout=30)
-        except:
+        except Exception:
             pass
 
     if format == "json":
@@ -1311,7 +1312,7 @@ if __name__ == "__main__":
                 _age_hours = (datetime.datetime.now() - _last_dt).total_seconds() / 3600
                 if _age_hours < 1:
                     _needs_refresh = False
-        except:
+        except Exception:
             pass
 
     if _needs_refresh and os.path.exists(REFRESH_SCRIPT):

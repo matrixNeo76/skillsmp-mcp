@@ -146,3 +146,5 @@ Ad ogni rilascio: aggiornare VERSION, CHANGELOG.md, e creare tag git.
 | `skillsmp_status` | Stato sistema |
 | `skillsmp_skill_diff` | Confronto contenuto |
 | `skillsmp_check_outdated` | Report skill obsolete |
+| `skillsmp_discover` | Scopri skill SkillsMP che non hai |
+| `skillsmp_install_skill` | Installa skill da GitHub |

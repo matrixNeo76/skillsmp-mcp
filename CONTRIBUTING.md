@@ -75,6 +75,26 @@ Aggiorna automaticamente `skill_structure.json` prima di ogni commit.
 4. Tag: `git tag -a vX.Y.Z -m "vX.Y.Z"`
 5. Push: `git push && git push --tags`
 
+## Strumenti MCP (11 tools)
+
+Il server espone 11 tools MCP:
+
+| Tool | Descrizione |
+|------|-------------|
+| `skillsmp_search` | Keyword search con filtri |
+| `skillsmp_ai_search` | AI semantic search |
+| `skillsmp_check_skill` | Verifica skill locale |
+| `skillsmp_compare_skills` | Confronto con alternative |
+| `skillsmp_scan_domain` | Scansione intero dominio |
+| `skillsmp_refresh_structure` | Rigenera struttura dal filesystem |
+| `skillsmp_status` | Stato sistema (API, rate limit, cache) |
+| `skillsmp_skill_diff` | Confronta contenuto locale vs SkillsMP |
+| `skillsmp_check_outdated` | Report skill obsolete prioritarie |
+| `skillsmp_discover` | Scopri skill SkillsMP che non hai |
+| `skillsmp_install_skill` | Installa skill da GitHub |
+
+Tutti i tool supportano `format="json"` per output machine-readable.
+
 ## Segnalare Bug
 
 Aprire una [issue](https://github.com/matrixNeo76/skillsmp-mcp/issues) con:
