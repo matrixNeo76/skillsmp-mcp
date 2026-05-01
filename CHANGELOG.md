@@ -1,49 +1,59 @@
 # Changelog
 
-## v1.2.0 (2026-05-01)
+Tutte le modifiche significative a questo progetto saranno documentate in questo file.
+
+Il formato si basa su [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.2.0] — 2026-05-01
 
 ### Added
-- Nuovo tool: `skillsmp_skill_diff` — confronta contenuto locale vs SkillsMP
-  (IDENTICA / SIMILE / DIVERSA con similarity score)
-- Auto-refresh struttura all'avvio del server (--merge)
-- Export CSV oltre a XLSX (flag `--csv` su generate_xlsx.py)
-- Pre-commit hook per auto-refresh prima del commit
-- File VERSION per gestione versioni centralizzata
-- Link al repo GitHub nella SKILL.md
+- **Nuovo tool:** `skillsmp_skill_diff` — confronta contenuto SKILL.md locale vs SkillsMP
+  con classificazione IDENTICA / SIMILE / DIVERSA e similarity score Jaccard
+- **Auto-refresh struttura** all'avvio del server (merge con skill installate)
+- **Export CSV** con flag `--csv` su `generate_xlsx.py` (funziona anche senza openpyxl)
+- **Pre-commit hook** per auto-refresh di `skill_structure.json` prima del commit
+- **File VERSION** per gestione versioni centralizzata
+- **ARCHITECTURE.md** — documentazione architetturale completa
+- **AGENTS.md** — istruzioni per AI agent che lavorano sul repo
+- **CONTRIBUTING.md** — guida ai contributi con linee guida e processi
+- **SECURITY.md** — politiche di sicurezza e gestione API key
+- **CODE_OF_CONDUCT.md** — codice di condotta
 
 ### Changed
-- Versione server letta da file VERSION invece che hardcoded
-- generate_xlsx.py ora funziona anche senza openpyxl (solo CSV)
-- Struttura skill sempre sincronizzata all'avvio del server
+- `server.py`: versione letta da file `VERSION` invece che hardcoded
+- `README.md`: completamente riscritto con badge, tool table, struttura aggiornata
+- `generate_xlsx.py`: ora funziona in modalita' CSV anche senza openpyxl installato
+- SKILL.md: aggiunto link al repository GitHub
 
-## v1.1.0 (2026-05-01)
+## [1.1.0] — 2026-05-01
 
 ### Added
-- 2 nuovi MCP tools: `skillsmp_refresh_structure` e `skillsmp_status`
-- Auto-scan struttura skill da `.agents/skills/` con `scripts/refresh_structure.py`
-- Output JSON su tutti i tools (parametro `format="json"`)
-- Test suite con pytest (14 test)
-- GitHub Actions CI workflow (Python 3.11, 3.12, 3.13)
-- CHANGELOG.md
-
-### Changed
+- **Nuovo tool:** `skillsmp_refresh_structure` — rigenera struttura skill da filesystem
+- **Nuovo tool:** `skillsmp_status` — mostra stato sistema (API health, rate limit, cache)
+- **Auto-scan struttura skill** con `scripts/refresh_structure.py --merge`
+- **Output JSON** su tutti i tool (parametro `format="json"`)
+- **Suite di test pytest** (14 test: rate limit, cache, formattazione, struttura)
+- **GitHub Actions CI** (Python 3.11, 3.12, 3.13)
 - `show_all_skills.py` ora legge da `skill_structure.json` centralizzato
-- `server.py` path relativi al repo (portabilità)
-- `setup.ps1` e `setup.sh` idempotenti
+
+### Changed
+- `server.py`: path relativi al repo per portabilita'
+- `setup.ps1` e `setup.sh`: ora idempotenti (ri-eseguibili senza danni)
 
 ### Fixed
 - Disallineamento struttura JSON vs skill installate (581 skill sincronizzate)
-- Path assoluti in `.mcp.json` sostituiti con path relativi al repo
+- Path assoluti sostituiti con relativi
 
-## v1.0.0 (2026-05-01)
+## [1.0.0] — 2026-05-01
 
 ### Added
-- MCP server con 5 tools: `skillsmp_search`, `skillsmp_ai_search`,
+- **MCP server** con 5 tools: `skillsmp_search`, `skillsmp_ai_search`,
   `skillsmp_check_skill`, `skillsmp_compare_skills`, `skillsmp_scan_domain`
-- Retry con exponential backoff (3 tentativi)
-- Rate limit tracking (500/giorno)
-- Cache adattiva (pattern stabili = cache piu lunga)
-- `data/skill_structure.json` con 608 skill in 17 domini
+- **Retry** con exponential backoff (3 tentativi)
+- **Rate limit tracking** (500 richieste/giorno)
+- **Cache adattiva**: 5 min (default), 10 min (skill con >1000 stelle)
+- `data/skill_structure.json` con ~600 skill in 17 domini
 - `scripts/generate_xlsx.py` per inventario XLSX
 - Skill `skillsmp-checker` per Craft Agents
 - Setup script per Windows (PowerShell) e Linux/macOS (Bash)
