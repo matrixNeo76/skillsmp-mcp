@@ -1,12 +1,15 @@
 """
-show_all_skills.py — Mostra tutte le skill locali con verifica SkillsMP.
-Legge la struttura da skill_structure.json.
+show_all_skills.py — Mostra skill locali con verifica SkillsMP.
 
 Uso:
-  python show_all_skills.py
-  SKILLSMP_API_KEY="..." python show_all_skills.py
+  python scripts/show_all_skills.py                     # Tutte le skill
+  python scripts/show_all_skills.py --domain "7"        # Solo dominio 7
+  python scripts/show_all_skills.py --domain "SECURITY" # Per nome
+  python scripts/show_all_skills.py --outdated          # Solo candidate obsolete
+  python scripts/show_all_skills.py --limit 10          # Max risultati
+  python scripts/show_all_skills.py --format json       # Output JSON
 """
-import sys, os, re, json, time
+import sys, os, re, json, time, argparse
 sys.stdout.reconfigure(encoding='utf-8')
 os.environ['PYTHONIOENCODING'] = 'utf-8'
 
@@ -21,60 +24,90 @@ with open(STRUCTURE_PATH, 'r', encoding='utf-8') as f:
 API_BASE = 'https://skillsmp.com/api/v1'
 API_KEY = os.environ.get('SKILLSMP_API_KEY', '')
 
-def search(q, limit=3):
-    r = httpx.get(f'{API_BASE}/skills/search',
-                  params={'q': q, 'limit': limit, 'sortBy': 'stars'},
-                  headers={'Authorization': f'Bearer {API_KEY}'}, timeout=10)
-    r.raise_for_status()
-    return r.json()
-
-# ── Scan ──
-def check_skillsmp(skill_name):
+def fetch_skill(skill_name):
     try:
-        data = search(skill_name.replace('-', ' '), limit=1)
-        if data.get('success') and data['data']['skills']:
-            s = data['data']['skills'][0]
+        r = httpx.get(f'{API_BASE}/skills/search',
+                      params={'q': skill_name.replace('-', ' '), 'limit': 1, 'sortBy': 'stars'},
+                      headers={'Authorization': f'Bearer {API_KEY}'}, timeout=10)
+        data = r.json()
+        skills = data.get('data', {}).get('skills', [])
+        if skills:
+            s = skills[0]
             stars = s.get('stars', 0)
             updated = s.get('updatedAt', '')
             if updated:
                 updated = time.strftime('%Y-%m-%d', time.gmtime(int(updated)))
-            author = s.get('author', '')
-            return (int(stars), updated, author)
-        return (0, '-', '-')
+            return {'stars': int(stars), 'updated': updated, 'author': s.get('author', '')}
     except:
-        return (-1, 'ERR', '')
+        pass
+    return None
 
-total_skills = sum(len(sk) for d in structure['domains'] for sub in d['subdomains'] for sk in sub['skills'])
-calls = 0
-MAX_CALLS = 35
+def main():
+    parser = argparse.ArgumentParser(description='Mostra skill con verifica SkillsMP')
+    parser.add_argument('--domain', help='Filtra per dominio (numero o nome)')
+    parser.add_argument('--outdated', action='store_true', help='Solo skill candidate obsolete (stelle >1000)')
+    parser.add_argument('--limit', type=int, default=0, help='Max risultati (0 = tutti)')
+    parser.add_argument('--format', choices=['text', 'json'], default='text', help='Formato output')
+    args = parser.parse_args()
 
-print('═' * 120)
-print(f'  SKILL LOCALI — {total_skills} skill in {len(structure["domains"])} domini')
-print('═' * 120)
-print()
+    # Filtra skill
+    all_skills = []
+    for dom in structure['domains']:
+        dn = f"{dom.get('number', '')}. {dom['name']}"
+        if args.domain and args.domain.lower() not in dn.lower() and args.domain.lower() not in dom['name'].lower():
+            continue
+        for sub in dom['subdomains']:
+            for sk in sub['skills']:
+                all_skills.append({'name': sk, 'domain': dn, 'subdomain': sub['name']})
 
-for domain in structure['domains']:
-    dn = domain['name']
-    dnum = domain.get('number', '')
-    dom_total = sum(len(sub['skills']) for sub in domain['subdomains'])
+    if not all_skills:
+        print(f'Nessuna skill trovata per dominio "{args.domain}"')
+        return
 
-    print(f'  {dnum}. {dn}')
+    if args.limit:
+        all_skills = all_skills[:args.limit]
 
-    for sub in domain['subdomains']:
-        print(f'     {sub["name"]} ({len(sub["skills"])})')
-        for sk in sub['skills']:
-            if calls < MAX_CALLS:
-                stars, updated, author = check_skillsmp(sk)
-                calls += 1
-                if stars > 0:
-                    star_str = f'{int(stars):>6,}'.replace(',', '.')
-                    print(f'        {sk:45s}  ⭐{star_str}  📅{updated}  👤{author[:25]:25s}')
-                else:
-                    print(f'        {sk:45s}  [non trovata]')
-            else:
-                print(f'        {sk:45s}  [vedi catalogo]')
+    # Verifica su SkillsMP
+    results = []
+    for i, sk in enumerate(all_skills):
+        data = fetch_skill(sk['name'])
+        if data:
+            results.append({**sk, **data})
+        if args.format == 'text':
+            progress = f'\r  Verificando {i+1}/{len(all_skills)}...'
+            print(progress, end='', file=sys.stderr)
+
+    if args.format == 'text':
+        print('\r' + ' ' * 60 + '\r', end='', file=sys.stderr)
+
+    # Filtra outdated se richiesto
+    if args.outdated:
+        results = [r for r in results if r.get('stars', 0) >= 1000]
+        results.sort(key=lambda x: x['stars'], reverse=True)
+
+    # Output
+    if args.format == 'json':
+        output = {
+            'domain': args.domain or 'all',
+            'total': len(results),
+            'meta': structure.get('_meta', {}),
+            'skills': results,
+        }
+        print(json.dumps(output, indent=2, ensure_ascii=False))
+    else:
+        meta = structure.get('_meta', {})
+        print(f'Skill: {len(results)}/{len(all_skills)} verificate')
+        if meta:
+            print(f'Struttura: v{meta.get("version", "?")}, refresh {meta.get("last_refresh", "?")[:19]}')
         print()
-    print()
+        for r in results:
+            stars = r.get('stars', 0)
+            updated = r.get('updated', '-')
+            author = r.get('author', '')[:25]
+            marker = '⭐' if stars >= 10000 else '📌' if stars >= 1000 else '  '
+            print(f'  {marker} {r["name"]:45s}  ⭐{int(stars):>6,}  📅{updated}  👤{author}')
+        print(f'\n{len(results)} skill mostrate')
 
-print(f'  {total_skills} skill totali | {calls} verificate su SkillsMP')
-print(f'  Per rigenerare la struttura: python scripts/refresh_structure.py')
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,7 @@
+{
+  "_comment": "Configurazione opzionale per SkillsMP MCP Server",
+  "cache_ttl": 300,
+  "stable_ttl": 600,
+  "max_retries": 3,
+  "auto_refresh": true
+}

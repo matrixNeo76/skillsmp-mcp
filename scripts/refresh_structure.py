@@ -276,13 +276,33 @@ def scan_and_build(merge: bool = False) -> dict:
     return output, all_skills
 
 
+def get_version() -> str:
+    """Legge la versione dal file VERSION."""
+    version_path = os.path.join(REPO_DIR, 'VERSION')
+    try:
+        with open(version_path, 'r') as f:
+            return f.read().strip()
+    except:
+        return '0.0.0'
+
+
 def save_structure(structure: dict):
-    """Salva struttura su file JSON."""
+    """Salva struttura su file JSON con metadati."""
+    total = sum(len(s['skills']) for d in structure['domains'] for s in d['subdomains'])
+    from datetime import datetime
+    structure['_meta'] = {
+        'version': get_version(),
+        'last_refresh': datetime.now().isoformat(),
+        'total_skills': total,
+        'domains': len(structure['domains']),
+        'generated_by': 'refresh_structure.py',
+    }
     with open(STRUCTURE_PATH, 'w', encoding='utf-8') as f:
         json.dump(structure, f, indent=2, ensure_ascii=False)
     print(f'✅ Struttura salvata: {STRUCTURE_PATH}')
-    total = sum(len(s['skills']) for d in structure['domains'] for s in d['subdomains'])
     print(f'   {len(structure["domains"])} domini, {total} skill')
+    meta = structure['_meta']
+    print(f'   Ultimo refresh: {meta["last_refresh"]} (v{meta["version"]})')
 
 
 if __name__ == '__main__':

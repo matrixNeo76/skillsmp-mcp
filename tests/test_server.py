@@ -124,3 +124,73 @@ def test_xlsx_script_exists():
     repo_dir = os.path.dirname(os.path.dirname(__file__))
     path = os.path.join(repo_dir, 'scripts', 'generate_xlsx.py')
     assert os.path.exists(path)
+
+
+def test_server_has_9_tools():
+    """Il server deve avere 9 tools MCP registrati."""
+    repo_dir = os.path.dirname(os.path.dirname(__file__))
+    sys.path.insert(0, repo_dir)
+    from server import mcp
+    tools = mcp._tool_manager.list_tools()
+    assert len(tools) == 9, f'Aspettati 9 tools, trovati {len(tools)}'
+    tool_names = [t.name for t in tools]
+    expected = [
+        'skillsmp_search', 'skillsmp_ai_search', 'skillsmp_check_skill',
+        'skillsmp_compare_skills', 'skillsmp_scan_domain',
+        'skillsmp_refresh_structure', 'skillsmp_status',
+        'skillsmp_skill_diff', 'skillsmp_check_outdated',
+    ]
+    for e in expected:
+        assert e in tool_names, f'Tool mancante: {e}'
+
+
+def test_status_returns_json():
+    """skillsmp_status deve restituire JSON valido."""
+    repo_dir = os.path.dirname(os.path.dirname(__file__))
+    sys.path.insert(0, repo_dir)
+    from server import skillsmp_status
+    import json
+    result = json.loads(skillsmp_status())
+    assert 'api_health' in result
+    assert 'rate_limit' in result
+    assert 'cache' in result
+    assert 'skills_local' in result
+    assert 'server_version' in result
+
+
+def test_structure_has_meta():
+    """skill_structure.json deve avere campo _meta."""
+    repo_dir = os.path.dirname(os.path.dirname(__file__))
+    path = os.path.join(repo_dir, 'data', 'skill_structure.json')
+    with open(path, 'r', encoding='utf-8') as f:
+        struct = json.load(f)
+    assert '_meta' in struct, 'Mancante _meta'
+    meta = struct['_meta']
+    assert 'version' in meta
+    assert 'last_refresh' in meta
+    assert 'total_skills' in meta
+    assert meta['total_skills'] > 500
+
+
+def test_skill_diff_not_found():
+    """skillsmp_skill_diff con skill inesistente non deve crashare."""
+    repo_dir = os.path.dirname(os.path.dirname(__file__))
+    sys.path.insert(0, repo_dir)
+    from server import skillsmp_skill_diff
+    import json
+    # Skill che sicuramente non esiste
+    result = skillsmp_skill_diff('questa-skill-non-esiste-mai', format='json')
+    data = json.loads(result)
+    assert 'error' in data or 'found' in data
+
+
+def test_server_version_file():
+    """File VERSION deve contenere una versione valida."""
+    repo_dir = os.path.dirname(os.path.dirname(__file__))
+    path = os.path.join(repo_dir, 'VERSION')
+    with open(path, 'r') as f:
+        version = f.read().strip()
+    parts = version.split('.')
+    assert len(parts) == 3, f'Versione non semver: {version}'
+    for p in parts:
+        assert p.isdigit(), f'Parte non numerica: {p}'

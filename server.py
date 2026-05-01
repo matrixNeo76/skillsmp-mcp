@@ -30,10 +30,26 @@ API_BASE = "https://skillsmp.com/api/v1"
 API_KEY = os.environ.get("SKILLSMP_API_KEY", "")
 REQUEST_TIMEOUT = 15
 MAX_RETRIES = 3
+DEFAULT_TTL = 300
+STABLE_TTL = 600
+AUTO_REFRESH = True
 SKILLS_DIR = os.path.expanduser("~/.agents/skills")
 
 SERVER_DIR = os.path.dirname(os.path.abspath(__file__))
 VERSION_PATH = os.path.join(SERVER_DIR, "VERSION")
+
+# ── Config file opzionale (sovrascrive default) ──────────────
+CONFIG_PATH = os.path.join(SERVER_DIR, "skillsmp-config.json")
+if os.path.exists(CONFIG_PATH):
+    try:
+        with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+            _cfg = json.load(f)
+        DEFAULT_TTL = _cfg.get("cache_ttl", DEFAULT_TTL)
+        STABLE_TTL = _cfg.get("stable_ttl", STABLE_TTL)
+        MAX_RETRIES = _cfg.get("max_retries", MAX_RETRIES)
+        AUTO_REFRESH = _cfg.get("auto_refresh", AUTO_REFRESH)
+    except Exception as e:
+        print(f"[SkillsMP] Config error: {e}")
 SERVER_VERSION = "1.2.0"
 if os.path.exists(VERSION_PATH):
     try:
@@ -92,8 +108,6 @@ _tracker = RateLimitTracker()
 # ══════════════════════════════════════════════════════════════════════
 
 _cache: dict[str, tuple[float, dict]] = {}
-DEFAULT_TTL = 300
-STABLE_TTL = 600  # per skill con >1000 stelle
 
 def _get_ttl(data: dict) -> int:
     """TTL piu lungo per skill stabili (tante stelle)."""
@@ -855,21 +869,132 @@ def skillsmp_skill_diff(
     return "\n".join(lines)
 
 
+@mcp.tool(
+    description=(
+        "Scansiona TUTTE le skill locali e produce un report prioritizzato "
+        "delle piu' obsolete rispetto a SkillsMP. "
+        "Ordina per differenza di popolarita' (stelle SkillsMP vs stima locale). "
+        "Opzione --domain per limitare a un dominio specifico."
+    )
+)
+def skillsmp_check_outdated(
+    domain: Optional[str] = None,
+    limit: int = 20,
+    min_stars: int = 1000,
+    format: str = "text",
+) -> str:
+    """Trova le skill locali piu' obsolete su SkillsMP.
+
+    Args:
+        domain: Filtra per dominio (es. '7. SECURITY')
+        limit: Max risultati (default 20, max 100)
+        min_stars: Stelle minime SkillsMP per considerare la skill (default 1000)
+        format: 'text' o 'json'
+    """
+    # Carica struttura
+    if not os.path.exists(SKILL_STRUCTURE_PATH):
+        return json.dumps({"error": "skill_structure.json not found"})
+
+    with open(SKILL_STRUCTURE_PATH, "r", encoding="utf-8") as f:
+        struct = json.load(f)
+
+    # Raccogli tutte le skill (filtrate per dominio)
+    all_skills = []
+    for dom in struct.get("domains", []):
+        dn = f"{dom.get('number', '')}. {dom['name']}"
+        if domain and domain.lower() not in dn.lower() and domain.lower() not in dom['name'].lower():
+            continue
+        for sub in dom.get("subdomains", []):
+            for sk in sub.get("skills", []):
+                all_skills.append({"name": sk, "domain": dn, "subdomain": sub["name"]})
+
+    if not all_skills:
+        return json.dumps({"error": f"nessuna skill trovata per dominio '{domain}'"})
+
+    # Verifica su SkillsMP
+    outdated = []
+    for i, sk in enumerate(all_skills):
+        try:
+            data = _cached_or_fetch(f"out:{sk['name']}", f"{API_BASE}/skills/search",
+                                     {"q": sk["name"].replace("-", " "), "limit": 3, "sortBy": "stars"})
+            skills = data.get("data", {}).get("skills", [])
+            if skills:
+                s = skills[0]
+                stars = s.get("stars", 0)
+                updated = _format_date(s.get("updatedAt", ""))
+                author = s.get("author", "")
+                if stars >= min_stars:
+                    outdated.append({
+                        "name": sk["name"],
+                        "domain": sk["domain"],
+                        "stars": stars,
+                        "updated": updated,
+                        "author": author,
+                        "url": s.get("skillUrl", ""),
+                    })
+        except:
+            pass
+
+    # Ordina per stelle (decrescente)
+    outdated.sort(key=lambda x: x["stars"], reverse=True)
+    outdated = outdated[:min(max(limit, 1), 100)]
+
+    if format == "json":
+        return json.dumps({
+            "domain_filter": domain or "all",
+            "skills_checked": len(all_skills),
+            "outdated_found": len(outdated),
+            "skills": outdated,
+            "rate_limit": {
+                "remaining": _tracker.remaining(),
+                "calls_today": _tracker.calls_today,
+            }
+        }, indent=2, ensure_ascii=False)
+
+    lines = [
+        f"## 📊 Report Skill Obsolete",
+        f"Dominio: {domain or 'TUTTI'} | Verificate: {len(all_skills)} | Candidate obsolete: {len(outdated)}",
+        f"📊 {_tracker.summary()}",
+        "",
+    ]
+    for sk in outdated[:limit]:
+        lines.append(f"  {sk['name']:45s}  ⭐ {int(sk['stars']):>6,}  📅 {sk['updated']}  👤 {sk['author'][:25]:25s}")
+    lines.append("")
+    lines.append(f"🏆 Le {min(limit, len(outdated))} skill piu' popolari su SkillsMP (da considerare per update)")
+    return "\n".join(lines)
+
+
 # ══════════════════════════════════════════════════════════════════════
 #  Avvio (con auto-refresh struttura)
 # ══════════════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    # Auto-refresh struttura all'avvio
-    if os.path.exists(REFRESH_SCRIPT):
-        import subprocess
+    # Auto-refresh condizionale
+    import subprocess
+    _needs_refresh = AUTO_REFRESH
+
+    if _needs_refresh and os.path.exists(SKILL_STRUCTURE_PATH):
+        # Controlla se la struttura ha piu' di 1 ora
+        try:
+            with open(SKILL_STRUCTURE_PATH, "r", encoding="utf-8") as f:
+                _existing = json.load(f)
+            _meta = _existing.get("_meta", {})
+            _last = _meta.get("last_refresh", "")
+            if _last:
+                _last_dt = datetime.datetime.fromisoformat(_last)
+                _age_hours = (datetime.datetime.now() - _last_dt).total_seconds() / 3600
+                if _age_hours < 1:
+                    _needs_refresh = False
+        except:
+            pass
+
+    if _needs_refresh and os.path.exists(REFRESH_SCRIPT):
         try:
             result = subprocess.run(
                 [sys.executable, REFRESH_SCRIPT, "--merge"],
                 capture_output=True, text=True, timeout=30
             )
             if result.returncode == 0:
-                # Ricarica struttura in cache
                 if os.path.exists(SKILL_STRUCTURE_PATH):
                     with open(SKILL_STRUCTURE_PATH, "r", encoding="utf-8") as f:
                         _loaded_structure = json.load(f)
@@ -878,6 +1003,10 @@ if __name__ == "__main__":
                 print(f"  Error: {result.stderr.strip()}")
         except Exception as e:
             print(f"[SkillsMP] Auto-refresh error: {e}")
+    else:
+        print(f"[SkillsMP v{SERVER_VERSION}] Auto-refresh: saltato (struttura recente)")
 
-    print(f"[SkillsMP v{SERVER_VERSION}] Server avviato con 7 tools")
+    # Conta tools per print
+    _tool_count = len(mcp._tool_manager.list_tools())
+    print(f"[SkillsMP v{SERVER_VERSION}] Server avviato con {_tool_count} tools")
     mcp.run(transport="stdio")

@@ -543,6 +543,7 @@
             "debugging-strategies",
             "generate-custom-instructions-from-codebase",
             "github-copilot-starter",
+            "link-craft",
             "mentoring-juniors",
             "risk-metrics-calculation",
             "template-skill",
@@ -1148,5 +1149,12 @@
         }
       ]
     }
-  ]
+  ],
+  "_meta": {
+    "version": "1.2.0",
+    "last_refresh": "2026-05-01T21:46:15.121320",
+    "total_skills": 582,
+    "domains": 17,
+    "generated_by": "refresh_structure.py"
+  }
 }
