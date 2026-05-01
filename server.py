@@ -218,10 +218,10 @@ def _format_search_results_json(data: dict) -> str:
 #  Struttura skill locali (da JSON o default)
 # ══════════════════════════════════════════════════════════════════════
 
-SKILL_STRUCTURE_PATH = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "data", "skill_structure.json"
-)
+# Path relativi al repo
+SERVER_DIR = os.path.dirname(os.path.abspath(__file__))
+SKILL_STRUCTURE_PATH = os.path.join(SERVER_DIR, "data", "skill_structure.json")
+REFRESH_SCRIPT = os.path.join(SERVER_DIR, "scripts", "refresh_structure.py")
 
 def _load_skill_structure() -> dict:
     """Carica struttura skill da file JSON o restituisce struttura vuota."""
@@ -595,6 +595,132 @@ def skillsmp_scan_domain(
     lines.append("")
     lines.append(f"✅ Verificate {len(all_skills)} skill — {_tracker.summary()}")
     return "\n".join(lines)
+
+
+@mcp.tool(
+    description=(
+        "Scansiona le skill installate localmente in .agents/skills/ e rigenera "
+        "skill_structure.json. Opzione format='json' per output machine-readable."
+    )
+)
+def skillsmp_refresh_structure(
+    dry_run: bool = False,
+    format: str = "text",
+) -> str:
+    """Rigenera skill_structure.json dalle skill locali.
+
+    Args:
+        dry_run: Se True, mostra solo anteprima senza salvare
+        format: 'text' o 'json'
+    """
+    if not os.path.exists(REFRESH_SCRIPT):
+        return json.dumps({"error": f"refresh script not found: {REFRESH_SCRIPT}"})
+
+    import subprocess
+    cmd = [sys.executable, REFRESH_SCRIPT]
+    if dry_run:
+        cmd.append("--dry-run")
+
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        if result.returncode != 0:
+            return json.dumps({"error": result.stderr.strip()})
+
+        output = result.stdout.strip()
+        if format == "json":
+            # Ricarica struttura
+            if os.path.exists(SKILL_STRUCTURE_PATH):
+                with open(SKILL_STRUCTURE_PATH, "r", encoding="utf-8") as f:
+                    structure = json.load(f)
+            else:
+                structure = {"domains": []}
+
+            total = sum(len(s["skills"]) for d in structure.get("domains", [])
+                        for s in d.get("subdomains", []))
+            return json.dumps({
+                "success": True,
+                "domains": len(structure.get("domains", [])),
+                "skills": total,
+                "dry_run": dry_run,
+                "message": "struttura aggiornata" if not dry_run else "anteprima"
+            }, indent=2, ensure_ascii=False)
+
+        return output
+    except subprocess.TimeoutExpired:
+        return json.dumps({"error": "refresh script timed out"})
+    except Exception as e:
+        return json.dumps({"error": str(e)})
+
+
+@mcp.tool(
+    description=(
+        "Mostra lo stato del sistema: chiamate API SkillsMP rimanenti oggi, "
+        "numero di cache entries, health dell'API SkillsMP e skill installate localmente."
+    )
+)
+def skillsmp_status() -> str:
+    """Mostra lo stato del sistema SkillsMP.
+
+    Restituisce: chiamate API, cache, health, skill locali
+    """
+    import datetime as dt
+
+    # Health SkillsMP
+    api_healthy = False
+    api_error = ""
+    try:
+        h = httpx.get("https://skillsmp.com/api/health", timeout=5)
+        api_healthy = h.status_code == 200 and h.json().get("status") == "ok"
+    except Exception as e:
+        api_error = str(e)
+
+    # Skill locali
+    local_count = 0
+    agents_dir = os.path.expanduser("~/.agents/skills")
+    if os.path.isdir(agents_dir):
+        local_count = len([d for d in os.listdir(agents_dir)
+                          if os.path.isdir(os.path.join(agents_dir, d)) and
+                          os.path.isfile(os.path.join(agents_dir, d, "SKILL.md"))])
+
+    # Struttura
+    structure_skills = 0
+    if os.path.exists(SKILL_STRUCTURE_PATH):
+        try:
+            with open(SKILL_STRUCTURE_PATH, "r", encoding="utf-8") as f:
+                struct = json.load(f)
+            structure_skills = sum(len(s["skills"]) for d in struct.get("domains", [])
+                                   for s in d.get("subdomains", []))
+        except:
+            pass
+
+    now = dt.datetime.now()
+    reset_time = now + dt.timedelta(days=1)
+    reset_time = reset_time.replace(hour=0, minute=0, second=0)
+    hours_to_reset = (reset_time - now).total_seconds() / 3600
+
+    result = {
+        "api_health": {
+            "healthy": api_healthy,
+            "error": api_error if api_error else None,
+        },
+        "rate_limit": {
+            "remaining": _tracker.remaining(),
+            "calls_today": _tracker.calls_today,
+            "daily_limit": _tracker.daily_limit,
+            "reset_in_hours": round(hours_to_reset, 1),
+        },
+        "cache": {
+            "entries": len(_cache),
+            "ttl_seconds": DEFAULT_TTL,
+        },
+        "skills_local": {
+            "installed": local_count,
+            "in_structure": structure_skills,
+        },
+        "server_version": "2.0.0",
+    }
+
+    return json.dumps(result, indent=2, ensure_ascii=False)
 
 
 # ══════════════════════════════════════════════════════════════════════
