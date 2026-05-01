@@ -37,6 +37,24 @@ Tools disponibili:
 4. **Report all'utente:** spiega se la skill locale è ancora valida o se su SkillsMP esistono alternative migliori
 5. **Se ci sono alternative migliori**, mostra nome, autore, stelle e link
 
+## Tools MCP Disponibili (11)
+
+I tools del source **skillsmp** sono attivati tramite `.mcp.json`:
+
+| Tool | Cosa fa |
+|------|---------|
+| `skillsmp_search` | Keyword search con filtri |
+| `skillsmp_ai_search` | AI semantic search (Cloudflare) |
+| `skillsmp_check_skill` | Verifica skill locale su SkillsMP |
+| `skillsmp_compare_skills` | Confronta con alternative |
+| `skillsmp_scan_domain` | Scansione intero dominio |
+| `skillsmp_refresh_structure` | Rigenera struttura dal filesystem |
+| `skillsmp_status` | Stato sistema (API, cache, rate limit) |
+| `skillsmp_skill_diff` | Confronta contenuto locale vs SkillsMP |
+| `skillsmp_check_outdated` | Report skill obsolete prioritarie |
+| `skillsmp_discover` | Scopri skill SkillsMP che non hai |
+| `skillsmp_install_skill` | Installa skill da GitHub |
+
 ## Procedura: Ricerca Esplorativa
 
 1. **Chiedi cosa vuole fare l'utente** (se non è specifico)

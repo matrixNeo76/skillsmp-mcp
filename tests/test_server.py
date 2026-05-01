@@ -236,3 +236,49 @@ def test_categories_dict():
     assert 'frontend' in SKILLSMP_CATEGORIES
     assert 'cloud' in SKILLSMP_CATEGORIES
     assert len(SKILLSMP_CATEGORIES) >= 40
+
+
+def test_search_json_format():
+    """skillsmp_search con format='json' deve restituire JSON valido."""
+    repo_dir = os.path.dirname(os.path.dirname(__file__))
+    sys.path.insert(0, repo_dir)
+    from server import skillsmp_search
+    import json
+    result = skillsmp_search('test', limit=1, format='json')
+    data = json.loads(result)
+    assert 'skills' in data or 'error' in data
+    # Non deve essere testo markdown
+    assert not result.startswith('#')
+
+
+def test_check_outdated_json():
+    """skillsmp_check_outdated deve restituire JSON valido."""
+    repo_dir = os.path.dirname(os.path.dirname(__file__))
+    sys.path.insert(0, repo_dir)
+    from server import skillsmp_check_outdated
+    import json
+    result = skillsmp_check_outdated(domain='TEST', limit=1, format='json')
+    data = json.loads(result)
+    assert 'error' in data or 'skills' in data or 'domain_filter' in data
+
+
+def test_discover_invalid_category():
+    """skillsmp_discover con categoria invalida deve dare errore."""
+    repo_dir = os.path.dirname(os.path.dirname(__file__))
+    sys.path.insert(0, repo_dir)
+    from server import skillsmp_discover
+    import json
+    result = skillsmp_discover(category='categoria-che-non-esiste', format='json')
+    data = json.loads(result)
+    assert 'error' in data
+
+
+def test_scan_domain_invalid():
+    """skillsmp_scan_domain con dominio inesistente deve dare errore."""
+    repo_dir = os.path.dirname(os.path.dirname(__file__))
+    sys.path.insert(0, repo_dir)
+    from server import skillsmp_scan_domain
+    import json
+    result = skillsmp_scan_domain(domain_query='DOMINIO_INESISTENTE_999', format='json')
+    data = json.loads(result)
+    assert 'error' in data

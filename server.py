@@ -18,12 +18,22 @@ v2 miglioramenti:
 """
 
 import os
-import time
+import re
 import json
+import time
+import csv
 import httpx
 import datetime
+import subprocess
 from typing import Optional
 from mcp.server.fastmcp import FastMCP
+
+# ── .env support ───────────────────────────────────────────────────
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 # ── Config ────────────────────────────────────────────────────────────
 API_BASE = "https://skillsmp.com/api/v1"
@@ -690,7 +700,6 @@ def skillsmp_refresh_structure(
     if not os.path.exists(REFRESH_SCRIPT):
         return json.dumps({"error": f"refresh script not found: {REFRESH_SCRIPT}"})
 
-    import subprocess
     cmd = [sys.executable, REFRESH_SCRIPT]
     if dry_run:
         cmd.append("--dry-run")
@@ -821,7 +830,6 @@ def skillsmp_skill_diff(
         try:
             with open(local_path, "r", encoding="utf-8") as f:
                 content = f.read()
-            import re
             m = re.search(r'description:\s*"([^"]*)"', content)
             if m:
                 local_desc = m.group(1)
@@ -1016,12 +1024,11 @@ def skillsmp_check_outdated(
 
     # Salva come CSV se richiesto
     if save_csv and outdated:
-        import csv as csv_mod
         from datetime import datetime as dt_mod
         csv_path = os.path.join(SERVER_DIR, "docs", f"outdated_{dt_mod.now().strftime('%Y%m%d_%H%M%S')}.csv")
         try:
             with open(csv_path, "w", newline="", encoding="utf-8-sig") as f:
-                w = csv_mod.writer(f)
+                w = csv.writer(f)
                 w.writerow(["Nome Skill", "Dominio", "Stelle SkillsMP", "Ultimo Aggiornamento", "Autore", "URL"])
                 for sk in outdated:
                     w.writerow([sk["name"], sk["domain"], sk["stars"], sk["updated"], sk["author"], sk.get("url", "")])
@@ -1222,7 +1229,6 @@ def skillsmp_install_skill(
 
     # Aggiorna struttura
     if os.path.exists(REFRESH_SCRIPT):
-        import subprocess
         try:
             subprocess.run([sys.executable, REFRESH_SCRIPT, "--merge"],
                           capture_output=True, text=True, timeout=30)
@@ -1249,7 +1255,6 @@ def skillsmp_install_skill(
 
 if __name__ == "__main__":
     # Auto-refresh condizionale
-    import subprocess
     _needs_refresh = AUTO_REFRESH
 
     if _needs_refresh and os.path.exists(SKILL_STRUCTURE_PATH):

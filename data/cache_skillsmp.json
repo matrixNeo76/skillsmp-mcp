@@ -70,11 +70,1209 @@
         }
       },
       "meta": {
-        "requestId": "9c197191-ffaa-463a-acc7-e16a127246da",
-        "responseTimeMs": 7
+        "requestId": "426b19ab-76ab-4673-8141-f18231df4da5",
+        "responseTimeMs": 5
       }
     },
-    "expires_at": 1777676685.9297993,
-    "cached_at": 1777676385.9297993
+    "expires_at": 1777678184.0893235,
+    "cached_at": 1777677884.0893235
+  },
+  "search:test:None:None": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "tomevault-io-skills-registry-choka30-danielhuencho-github-io-test-skill-md",
+            "name": "test",
+            "author": "tomevault-io",
+            "description": "Execute test suite with specified scope (unit, module, integration, all, or affected). Reports results and coverage. Use to verify code changes. Can auto-trigger during task execution or when verification is needed. Use when this capability is needed.",
+            "githubUrl": "https://github.com/tomevault-io/skills-registry/tree/main/choka30--danielhuencho-github-io--test",
+            "skillUrl": "https://skillsmp.com/skills/tomevault-io-skills-registry-choka30-danielhuencho-github-io-test-skill-md",
+            "stars": 0,
+            "updatedAt": "1777416783"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 1,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "test",
+          "sortBy": "recent"
+        }
+      },
+      "meta": {
+        "requestId": "8092f7c8-4629-4e66-8852-549dfd030a32",
+        "responseTimeMs": 1305
+      }
+    },
+    "expires_at": 1777678186.0870163,
+    "cached_at": 1777677886.0870163
+  },
+  "out:playwright-automation-fill-in-form": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-playwright-automation-fill-in-form-skill-md",
+            "name": "playwright-automation-fill-in-form",
+            "author": "github",
+            "description": "Automate filling in a form using Playwright MCP",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/playwright-automation-fill-in-form",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-playwright-automation-fill-in-form-skill-md",
+            "stars": 31506,
+            "updatedAt": "1771904373"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-github-awesome-copilot-playwright-automation-fill-in-form-skill-md",
+            "name": "playwright-automation-fill-in-form",
+            "author": "ComeOnOliver",
+            "description": "Automate filling in a form using Playwright MCP",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/github/awesome-copilot/playwright-automation-fill-in-form",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-github-awesome-copilot-playwright-automation-fill-in-form-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          },
+          {
+            "id": "beel-collab-presets-playwright-playwright-automation-fill-in-form-skill-md",
+            "name": "playwright-automation-fill-in-form",
+            "author": "beel-collab",
+            "description": "Automate filling in a form using Playwright MCP",
+            "githubUrl": "https://github.com/beel-collab/presets/tree/main/playwright/playwright-automation-fill-in-form",
+            "skillUrl": "https://skillsmp.com/skills/beel-collab-presets-playwright-playwright-automation-fill-in-form-skill-md",
+            "stars": 4,
+            "updatedAt": "1773575284"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "playwright automation fill in form",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "7a6c8937-2106-4dc6-bf80-18ed430e5c80",
+        "responseTimeMs": 1293
+      }
+    },
+    "expires_at": 1777678488.0569222,
+    "cached_at": 1777677888.0569222
+  },
+  "out:playwright-explore-website": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-playwright-explore-website-skill-md",
+            "name": "playwright-explore-website",
+            "author": "github",
+            "description": "Website exploration for testing using Playwright MCP",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/playwright-explore-website",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-playwright-explore-website-skill-md",
+            "stars": 31506,
+            "updatedAt": "1771904373"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-github-awesome-copilot-playwright-explore-website-skill-md",
+            "name": "playwright-explore-website",
+            "author": "ComeOnOliver",
+            "description": "Website exploration for testing using Playwright MCP",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/github/awesome-copilot/playwright-explore-website",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-github-awesome-copilot-playwright-explore-website-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          },
+          {
+            "id": "beel-collab-presets-playwright-playwright-explore-website-skill-md",
+            "name": "playwright-explore-website",
+            "author": "beel-collab",
+            "description": "Website exploration for testing using Playwright MCP",
+            "githubUrl": "https://github.com/beel-collab/presets/tree/main/playwright/playwright-explore-website",
+            "skillUrl": "https://skillsmp.com/skills/beel-collab-presets-playwright-playwright-explore-website-skill-md",
+            "stars": 4,
+            "updatedAt": "1773575284"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "playwright explore website",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "f6171748-71b0-4108-9cec-fd3f0bcd36db",
+        "responseTimeMs": 540
+      }
+    },
+    "expires_at": 1777678489.27689,
+    "cached_at": 1777677889.27689
+  },
+  "out:playwright-generate-test": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-playwright-generate-test-skill-md",
+            "name": "playwright-generate-test",
+            "author": "github",
+            "description": "Generate a Playwright test based on a scenario using Playwright MCP",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/playwright-generate-test",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-playwright-generate-test-skill-md",
+            "stars": 31506,
+            "updatedAt": "1771904373"
+          },
+          {
+            "id": "gonstoll-dotfiles-config-opencode-skills-playwright-generate-test-skill-md",
+            "name": "playwright-generate-test",
+            "author": "gonstoll",
+            "description": "Generate a Playwright test based on a scenario using Playwright CLI",
+            "githubUrl": "https://github.com/gonstoll/dotfiles/tree/master/.config/opencode/skills/playwright-generate-test",
+            "skillUrl": "https://skillsmp.com/skills/gonstoll-dotfiles-config-opencode-skills-playwright-generate-test-skill-md",
+            "stars": 117,
+            "updatedAt": "1774220515"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-github-awesome-copilot-playwright-generate-test-skill-md",
+            "name": "playwright-generate-test",
+            "author": "ComeOnOliver",
+            "description": "Generate a Playwright test based on a scenario using Playwright MCP",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/github/awesome-copilot/playwright-generate-test",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-github-awesome-copilot-playwright-generate-test-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "playwright generate test",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "947233a7-dbdc-4449-9af6-cb3973eb7c75",
+        "responseTimeMs": 1269
+      }
+    },
+    "expires_at": 1777678491.2069383,
+    "cached_at": 1777677891.2069383
+  },
+  "out:scoutqa-test": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-scoutqa-test-skill-md",
+            "name": "scoutqa-test",
+            "author": "github",
+            "description": "This skill should be used when the user asks to \"test this website\", \"run exploratory testing\", \"check for accessibility issues\", \"verify the login flow works\", \"find bugs on this page\", or requests automated QA testing. Triggers on web application testing scenarios including smoke tests, accessibility audits, e-commerce flows, and user flow validation using ScoutQA CLI. Use this skill proactively after implementing web application features to verify they work correctly.",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/scoutqa-test",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-scoutqa-test-skill-md",
+            "stars": 31506,
+            "updatedAt": "1773354968"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-github-awesome-copilot-scoutqa-test-skill-md",
+            "name": "scoutqa-test",
+            "author": "ComeOnOliver",
+            "description": "This skill should be used when the user asks to \"test this website\", \"run exploratory testing\", \"check for accessibility issues\", \"verify the login flow works\", \"find bugs on this page\", or requests automated QA testing. Triggers on web application testing scenarios including smoke tests, accessibility audits, e-commerce flows, and user flow validation using ScoutQA CLI. Use this skill proactively after implementing web application features to verify they work correctly.",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/github/awesome-copilot/scoutqa-test",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-github-awesome-copilot-scoutqa-test-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          },
+          {
+            "id": "supraforge-aaas-vault-skills-testing-scoutqa-test-skill-md",
+            "name": "scoutqa-test",
+            "author": "Supraforge",
+            "description": "This skill should be used when the user asks to \"test this website\", \"run exploratory testing\", \"check for accessibility issues\", \"verify the login flow works\", \"find bugs on this page\", or requests automated QA testing. Triggers on web application testing scenarios including smoke tests, accessibility audits, e-commerce flows, and user flow validation using ScoutQA CLI. IMPORTANT: Use this skill proactively after implementing web application features to verify they work correctly - don't wait for the user to ask for testing.",
+            "githubUrl": "https://github.com/Supraforge/aaas-vault/tree/main/skills/testing/scoutqa-test",
+            "skillUrl": "https://skillsmp.com/skills/supraforge-aaas-vault-skills-testing-scoutqa-test-skill-md",
+            "stars": 16,
+            "updatedAt": "1772885227"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 25,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "scoutqa test",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "c9e11feb-2771-4b8b-91ab-47f6b5b18d61",
+        "responseTimeMs": 487
+      }
+    },
+    "expires_at": 1777678492.3737116,
+    "cached_at": 1777677892.3737116
+  },
+  "out:webapp-testing": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "anthropics-skills-skills-webapp-testing-skill-md",
+            "name": "webapp-testing",
+            "author": "anthropics",
+            "description": "Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.",
+            "githubUrl": "https://github.com/anthropics/skills/tree/main/skills/webapp-testing",
+            "skillUrl": "https://skillsmp.com/skills/anthropics-skills-skills-webapp-testing-skill-md",
+            "stars": 125366,
+            "updatedAt": "1776721096"
+          },
+          {
+            "id": "sickn33-antigravity-awesome-skills-plugins-antigravity-awesome-skills-claude-skills-webapp-testing-skill-md",
+            "name": "webapp-testing",
+            "author": "sickn33",
+            "description": "To test local web applications, write native Python Playwright scripts.",
+            "githubUrl": "https://github.com/sickn33/antigravity-awesome-skills/tree/main/plugins/antigravity-awesome-skills-claude/skills/webapp-testing",
+            "skillUrl": "https://skillsmp.com/skills/sickn33-antigravity-awesome-skills-plugins-antigravity-awesome-skills-claude-skills-webapp-testing-skill-md",
+            "stars": 35521,
+            "updatedAt": "1776118482"
+          },
+          {
+            "id": "github-awesome-copilot-skills-webapp-testing-skill-md",
+            "name": "webapp-testing",
+            "author": "github",
+            "description": "Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/webapp-testing",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-webapp-testing-skill-md",
+            "stars": 31506,
+            "updatedAt": "1773369917"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "webapp testing",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "590c4dca-014a-4778-9120-d16e31012630",
+        "responseTimeMs": 1267
+      }
+    },
+    "expires_at": 1777678494.3390217,
+    "cached_at": 1777677894.3390217
+  },
+  "out:polyglot-test-agent": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-polyglot-test-agent-skill-md",
+            "name": "polyglot-test-agent",
+            "author": "github",
+            "description": "Generates comprehensive, workable unit tests for any programming language using a multi-agent pipeline. Use when asked to generate tests, write unit tests, improve test coverage, add test coverage, create test files, or test a codebase. Supports C#, TypeScript, JavaScript, Python, Go, Rust, Java, and more. Orchestrates research, planning, and implementation phases to produce tests that compile, pass, and follow project conventions.",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/polyglot-test-agent",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-polyglot-test-agent-skill-md",
+            "stars": 31506,
+            "updatedAt": "1771255406"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-github-awesome-copilot-polyglot-test-agent-skill-md",
+            "name": "polyglot-test-agent",
+            "author": "ComeOnOliver",
+            "description": "Generates comprehensive, workable unit tests for any programming language using a multi-agent pipeline. Use when asked to generate tests, write unit tests, improve test coverage, add test coverage, create test files, or test a codebase. Supports C#, TypeScript, JavaScript, Python, Go, Rust, Java, and more. Orchestrates research, planning, and implementation phases to produce tests that compile, pass, and follow project conventions.",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/github/awesome-copilot/polyglot-test-agent",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-github-awesome-copilot-polyglot-test-agent-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          },
+          {
+            "id": "auspis-fluent-repo-4j-github-skills-polyglot-test-agent-skill-md",
+            "name": "polyglot-test-agent",
+            "author": "auspis",
+            "description": "Generates comprehensive, workable unit tests for any programming language using a multi-agent pipeline. Use when asked to generate tests, write unit tests, improve test coverage, add test coverage, create test files, or test a codebase. Supports C#, TypeScript, JavaScript, Python, Go, Rust, Java, and more. Orchestrates research, planning, and implementation phases to produce tests that compile, pass, and follow project conventions.",
+            "githubUrl": "https://github.com/auspis/fluent-repo-4j/tree/main/.github/skills/polyglot-test-agent",
+            "skillUrl": "https://skillsmp.com/skills/auspis-fluent-repo-4j-github-skills-polyglot-test-agent-skill-md",
+            "stars": 7,
+            "updatedAt": "1774000025"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 186,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "polyglot test agent",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "87f1d683-6b9a-467a-978e-8bcf3910bea3",
+        "responseTimeMs": 1321
+      }
+    },
+    "expires_at": 1777678496.357554,
+    "cached_at": 1777677896.357554
+  },
+  "out:quality-playbook": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-quality-playbook-skill-md",
+            "name": "quality-playbook",
+            "author": "github",
+            "description": "Explore any codebase from scratch and generate six quality artifacts: a quality constitution (QUALITY.md), spec-traced functional tests, a code review protocol with regression test generation, an integration testing protocol, a multi-model spec audit (Council of Three), and an AI bootstrap file (AGENTS.md). Includes state machine completeness analysis and missing safeguard detection. Works with any language (Python, Java, Scala, TypeScript, Go, Rust, etc.). Use this skill whenever the user asks to set up a quality playbook, generate functional tests from specifications, create a quality constitution, build testing protocols, audit code against specs, or establish a repeatable quality system for a project. Also trigger when the user mentions 'quality playbook', 'spec audit', 'Council of Three', 'fitness-to-purpose', 'coverage theater', or wants to go beyond basic test generation to build a full quality system grounded in their actual codebase.",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/quality-playbook",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-quality-playbook-skill-md",
+            "stars": 31506,
+            "updatedAt": "1775000220"
+          },
+          {
+            "id": "andrewstellman-quality-playbook-skill-md",
+            "name": "quality-playbook",
+            "author": "andrewstellman",
+            "description": "Run a complete quality engineering audit on any codebase. Derives behavioral requirements from the code, generates spec-traced functional tests, runs a three-pass code review with regression tests, executes a multi-model spec audit (Council of Three), and produces a consolidated bug report with TDD-verified patches. Finds the 35% of real defects that structural code review alone cannot catch. Works with any language. Trigger on 'quality playbook', 'spec audit', 'Council of Three', 'fitness-to-purpose', or 'coverage theater'.",
+            "githubUrl": "https://github.com/andrewstellman/quality-playbook",
+            "skillUrl": "https://skillsmp.com/skills/andrewstellman-quality-playbook-skill-md",
+            "stars": 27,
+            "updatedAt": "1777389168"
+          },
+          {
+            "id": "gabrielmoreira-agent-skills-mirror-mirrors-repos-github-awesome-copilot-skills-quality-playbook-skill-md",
+            "name": "quality-playbook",
+            "author": "gabrielmoreira",
+            "description": "Explore any codebase from scratch and generate six quality artifacts: a quality constitution (QUALITY.md), spec-traced functional tests, a code review protocol with regression test generation, an integration testing protocol, a multi-model spec audit (Council of Three), and an AI bootstrap file (AGENTS.md). Includes state machine completeness analysis and missing safeguard detection. Works with any language (Python, Java, Scala, TypeScript, Go, Rust, etc.). Use this skill whenever the user asks to set up a quality playbook, generate functional tests from specifications, create a quality constitution, build testing protocols, audit code against specs, or establish a repeatable quality system for a project. Also trigger when the user mentions 'quality playbook', 'spec audit', 'Council of Three', 'fitness-to-purpose', 'coverage theater', or wants to go beyond basic test generation to build a full quality system grounded in their actual codebase.",
+            "githubUrl": "https://github.com/gabrielmoreira/agent-skills-mirror/tree/main/mirrors/repos/github@awesome-copilot/skills/quality-playbook",
+            "skillUrl": "https://skillsmp.com/skills/gabrielmoreira-agent-skills-mirror-mirrors-repos-github-awesome-copilot-skills-quality-playbook-skill-md",
+            "stars": 5,
+            "updatedAt": "1775011482"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "quality playbook",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "2971fa93-d8b9-4c5f-9ca5-913ddf629265",
+        "responseTimeMs": 490
+      }
+    },
+    "expires_at": 1777678497.5238812,
+    "cached_at": 1777677897.5238812
+  },
+  "out:ruff-recursive-fix": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-ruff-recursive-fix-skill-md",
+            "name": "ruff-recursive-fix",
+            "author": "github",
+            "description": "Run Ruff checks with optional scope and rule overrides, apply safe and unsafe autofixes iteratively, review each change, and resolve remaining findings with targeted edits or user decisions.",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/ruff-recursive-fix",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-ruff-recursive-fix-skill-md",
+            "stars": 31506,
+            "updatedAt": "1774570430"
+          },
+          {
+            "id": "beel-collab-presets-python-ruff-recursive-fix-skill-md",
+            "name": "ruff-recursive-fix",
+            "author": "beel-collab",
+            "description": "Run Ruff checks with optional scope and rule overrides, apply safe and unsafe autofixes iteratively, review each change, and resolve remaining findings with targeted edits or user decisions.",
+            "githubUrl": "https://github.com/beel-collab/presets/tree/main/python/ruff-recursive-fix",
+            "skillUrl": "https://skillsmp.com/skills/beel-collab-presets-python-ruff-recursive-fix-skill-md",
+            "stars": 4,
+            "updatedAt": "1774861386"
+          },
+          {
+            "id": "soraumika-cqed-based-studies-github-skills-ruff-recursive-fix-skill-md",
+            "name": "ruff-recursive-fix",
+            "author": "SoraUmika",
+            "description": "Run Ruff checks with optional scope and rule overrides, apply safe and unsafe autofixes iteratively, review each change, and resolve remaining findings with targeted edits or user decisions.",
+            "githubUrl": "https://github.com/SoraUmika/cqed_based_studies/tree/main/.github/skills/ruff-recursive-fix",
+            "skillUrl": "https://skillsmp.com/skills/soraumika-cqed-based-studies-github-skills-ruff-recursive-fix-skill-md",
+            "stars": 0,
+            "updatedAt": "1776466689"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 940,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "ruff recursive fix",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "0b378d91-6bde-4280-84f8-7de30acf0e7f",
+        "responseTimeMs": 516
+      }
+    },
+    "expires_at": 1777678498.7222583,
+    "cached_at": 1777677898.7222583
+  },
+  "out:csharp-mstest": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-csharp-mstest-skill-md",
+            "name": "csharp-mstest",
+            "author": "github",
+            "description": "Get best practices for MSTest 3.x/4.x unit testing, including modern assertion APIs and data-driven tests",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/csharp-mstest",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-csharp-mstest-skill-md",
+            "stars": 31506,
+            "updatedAt": "1771904373"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-github-awesome-copilot-csharp-mstest-skill-md",
+            "name": "csharp-mstest",
+            "author": "ComeOnOliver",
+            "description": "Get best practices for MSTest 3.x/4.x unit testing, including modern assertion APIs and data-driven tests",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/github/awesome-copilot/csharp-mstest",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-github-awesome-copilot-csharp-mstest-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          },
+          {
+            "id": "beel-collab-presets-dotnet-csharp-mstest-skill-md",
+            "name": "csharp-mstest",
+            "author": "beel-collab",
+            "description": "Get best practices for MSTest 3.x/4.x unit testing, including modern assertion APIs and data-driven tests",
+            "githubUrl": "https://github.com/beel-collab/presets/tree/main/dotnet/csharp-mstest",
+            "skillUrl": "https://skillsmp.com/skills/beel-collab-presets-dotnet-csharp-mstest-skill-md",
+            "stars": 4,
+            "updatedAt": "1773575284"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "csharp mstest",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "041bfdc8-93ce-40c1-b391-7c9b7166c639",
+        "responseTimeMs": 492
+      }
+    },
+    "expires_at": 1777678499.8760626,
+    "cached_at": 1777677899.8760626
+  },
+  "out:csharp-nunit": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-csharp-nunit-skill-md",
+            "name": "csharp-nunit",
+            "author": "github",
+            "description": "Get best practices for NUnit unit testing, including data-driven tests",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/csharp-nunit",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-csharp-nunit-skill-md",
+            "stars": 31506,
+            "updatedAt": "1771904373"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-github-awesome-copilot-csharp-nunit-skill-md",
+            "name": "csharp-nunit",
+            "author": "ComeOnOliver",
+            "description": "Get best practices for NUnit unit testing, including data-driven tests",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/github/awesome-copilot/csharp-nunit",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-github-awesome-copilot-csharp-nunit-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          },
+          {
+            "id": "beel-collab-presets-dotnet-csharp-nunit-skill-md",
+            "name": "csharp-nunit",
+            "author": "beel-collab",
+            "description": "Get best practices for NUnit unit testing, including data-driven tests",
+            "githubUrl": "https://github.com/beel-collab/presets/tree/main/dotnet/csharp-nunit",
+            "skillUrl": "https://skillsmp.com/skills/beel-collab-presets-dotnet-csharp-nunit-skill-md",
+            "stars": 4,
+            "updatedAt": "1773575284"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "csharp nunit",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "89cbede2-22b7-4bb6-a410-532d7c931c1c",
+        "responseTimeMs": 477
+      }
+    },
+    "expires_at": 1777678501.0444171,
+    "cached_at": 1777677901.0444171
+  },
+  "out:csharp-tunit": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-csharp-tunit-skill-md",
+            "name": "csharp-tunit",
+            "author": "github",
+            "description": "Get best practices for TUnit unit testing, including data-driven tests",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/csharp-tunit",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-csharp-tunit-skill-md",
+            "stars": 31506,
+            "updatedAt": "1771904373"
+          },
+          {
+            "id": "foxminchan-bookworm-github-skills-csharp-tunit-skill-md",
+            "name": "csharp-tunit",
+            "author": "foxminchan",
+            "description": "Get best practices for TUnit unit testing, including data-driven tests",
+            "githubUrl": "https://github.com/foxminchan/BookWorm/tree/main/.github/skills/csharp-tunit",
+            "skillUrl": "https://skillsmp.com/skills/foxminchan-bookworm-github-skills-csharp-tunit-skill-md",
+            "stars": 493,
+            "updatedAt": "1772880092"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-github-awesome-copilot-csharp-tunit-skill-md",
+            "name": "csharp-tunit",
+            "author": "ComeOnOliver",
+            "description": "Get best practices for TUnit unit testing, including data-driven tests",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/github/awesome-copilot/csharp-tunit",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-github-awesome-copilot-csharp-tunit-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "csharp tunit",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "6d48691f-7be3-4a86-85e6-f974f24bfbc0",
+        "responseTimeMs": 496
+      }
+    },
+    "expires_at": 1777678502.213684,
+    "cached_at": 1777677902.213684
+  },
+  "out:csharp-xunit": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-csharp-xunit-skill-md",
+            "name": "csharp-xunit",
+            "author": "github",
+            "description": "Get best practices for XUnit unit testing, including data-driven tests",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/csharp-xunit",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-csharp-xunit-skill-md",
+            "stars": 31506,
+            "updatedAt": "1771904373"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-github-awesome-copilot-csharp-xunit-skill-md",
+            "name": "csharp-xunit",
+            "author": "ComeOnOliver",
+            "description": "Get best practices for XUnit unit testing, including data-driven tests",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/github/awesome-copilot/csharp-xunit",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-github-awesome-copilot-csharp-xunit-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          },
+          {
+            "id": "beel-collab-presets-dotnet-csharp-xunit-skill-md",
+            "name": "csharp-xunit",
+            "author": "beel-collab",
+            "description": "Get best practices for XUnit unit testing, including data-driven tests",
+            "githubUrl": "https://github.com/beel-collab/presets/tree/main/dotnet/csharp-xunit",
+            "skillUrl": "https://skillsmp.com/skills/beel-collab-presets-dotnet-csharp-xunit-skill-md",
+            "stars": 4,
+            "updatedAt": "1773575284"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "csharp xunit",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "a15928bc-89e6-4921-bd48-bf8bc6d45fdb",
+        "responseTimeMs": 468
+      }
+    },
+    "expires_at": 1777678503.3653734,
+    "cached_at": 1777677903.3653734
+  },
+  "out:java-junit": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-java-junit-skill-md",
+            "name": "java-junit",
+            "author": "github",
+            "description": "Get best practices for JUnit 5 unit testing, including data-driven tests",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/java-junit",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-java-junit-skill-md",
+            "stars": 31506,
+            "updatedAt": "1771904373"
+          },
+          {
+            "id": "mivek-metarparser-agents-skills-java-junit-skill-md",
+            "name": "java-junit",
+            "author": "mivek",
+            "description": "Get best practices for JUnit 5 unit testing, including data-driven tests",
+            "githubUrl": "https://github.com/mivek/MetarParser/tree/main/.agents/skills/java-junit",
+            "skillUrl": "https://skillsmp.com/skills/mivek-metarparser-agents-skills-java-junit-skill-md",
+            "stars": 51,
+            "updatedAt": "1776957747"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-github-awesome-copilot-java-junit-skill-md",
+            "name": "java-junit",
+            "author": "ComeOnOliver",
+            "description": "Get best practices for JUnit 5 unit testing, including data-driven tests",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/github/awesome-copilot/java-junit",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-github-awesome-copilot-java-junit-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "java junit",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "21084d15-77d1-485e-9d3a-ed4a5ea6827a",
+        "responseTimeMs": 467
+      }
+    },
+    "expires_at": 1777678504.5304115,
+    "cached_at": 1777677904.5304115
+  },
+  "out:javascript-testing-patterns": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "sickn33-antigravity-awesome-skills-plugins-antigravity-awesome-skills-claude-skills-javascript-testing-patterns-skill-md",
+            "name": "javascript-testing-patterns",
+            "author": "sickn33",
+            "description": "Comprehensive guide for implementing robust testing strategies in JavaScript/TypeScript applications using modern testing frameworks and best practices.",
+            "githubUrl": "https://github.com/sickn33/antigravity-awesome-skills/tree/main/plugins/antigravity-awesome-skills-claude/skills/javascript-testing-patterns",
+            "skillUrl": "https://skillsmp.com/skills/sickn33-antigravity-awesome-skills-plugins-antigravity-awesome-skills-claude-skills-javascript-testing-patterns-skill-md",
+            "stars": 35521,
+            "updatedAt": "1776118482"
+          },
+          {
+            "id": "wshobson-agents-plugins-javascript-typescript-skills-javascript-testing-patterns-skill-md",
+            "name": "javascript-testing-patterns",
+            "author": "wshobson",
+            "description": "Implement comprehensive testing strategies using Jest, Vitest, and Testing Library for unit tests, integration tests, and end-to-end testing with mocking, fixtures, and test-driven development. Use when writing JavaScript/TypeScript tests, setting up test infrastructure, or implementing TDD/BDD workflows.",
+            "githubUrl": "https://github.com/wshobson/agents/tree/main/plugins/javascript-typescript/skills/javascript-testing-patterns",
+            "skillUrl": "https://skillsmp.com/skills/wshobson-agents-plugins-javascript-typescript-skills-javascript-testing-patterns-skill-md",
+            "stars": 34473,
+            "updatedAt": "1774489944"
+          },
+          {
+            "id": "rmyndharis-antigravity-skills-skills-javascript-testing-patterns-skill-md",
+            "name": "javascript-testing-patterns",
+            "author": "rmyndharis",
+            "description": "Implement comprehensive testing strategies using Jest, Vitest, and Testing Library for unit tests, integration tests, and end-to-end testing with mocking, fixtures, and test-driven development. Use when writing JavaScript/TypeScript tests, setting up test infrastructure, or implementing TDD/BDD workflows.",
+            "githubUrl": "https://github.com/rmyndharis/antigravity-skills/tree/main/skills/javascript-testing-patterns",
+            "skillUrl": "https://skillsmp.com/skills/rmyndharis-antigravity-skills-skills-javascript-testing-patterns-skill-md",
+            "stars": 688,
+            "updatedAt": "1768724076"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "javascript testing patterns",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "b67ba097-8c22-47a3-88a4-2de70af8c772",
+        "responseTimeMs": 1235
+      }
+    },
+    "expires_at": 1777678506.457349,
+    "cached_at": 1777677906.457349
+  },
+  "out:javascript-typescript-jest": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-javascript-typescript-jest-skill-md",
+            "name": "javascript-typescript-jest",
+            "author": "github",
+            "description": "Best practices for writing JavaScript/TypeScript tests using Jest, including mocking strategies, test structure, and common patterns.",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/javascript-typescript-jest",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-javascript-typescript-jest-skill-md",
+            "stars": 31506,
+            "updatedAt": "1771904373"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-github-awesome-copilot-javascript-typescript-jest-skill-md",
+            "name": "javascript-typescript-jest",
+            "author": "ComeOnOliver",
+            "description": "Best practices for writing JavaScript/TypeScript tests using Jest, including mocking strategies, test structure, and common patterns.",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/github/awesome-copilot/javascript-typescript-jest",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-github-awesome-copilot-javascript-typescript-jest-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          },
+          {
+            "id": "beel-collab-presets-react-javascript-typescript-jest-skill-md",
+            "name": "javascript-typescript-jest",
+            "author": "beel-collab",
+            "description": "Best practices for writing JavaScript/TypeScript tests using Jest, including mocking strategies, test structure, and common patterns.",
+            "githubUrl": "https://github.com/beel-collab/presets/tree/main/react/javascript-typescript-jest",
+            "skillUrl": "https://skillsmp.com/skills/beel-collab-presets-react-javascript-typescript-jest-skill-md",
+            "stars": 4,
+            "updatedAt": "1773575284"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "javascript typescript jest",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "6d217122-a601-4b67-90d1-7af6332fce30",
+        "responseTimeMs": 483
+      }
+    },
+    "expires_at": 1777678507.6332643,
+    "cached_at": 1777677907.6332643
+  },
+  "out:pytest-coverage": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-pytest-coverage-skill-md",
+            "name": "pytest-coverage",
+            "author": "github",
+            "description": "Run pytest tests with coverage, discover lines missing coverage, and increase coverage to 100%.",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/pytest-coverage",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-pytest-coverage-skill-md",
+            "stars": 31506,
+            "updatedAt": "1771904373"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-github-awesome-copilot-pytest-coverage-skill-md",
+            "name": "pytest-coverage",
+            "author": "ComeOnOliver",
+            "description": "Run pytest tests with coverage, discover lines missing coverage, and increase coverage to 100%.",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/github/awesome-copilot/pytest-coverage",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-github-awesome-copilot-pytest-coverage-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          },
+          {
+            "id": "aldelar-context-aware-vision-grounded-kb-agent-github-skills-pytest-coverage-skill-md",
+            "name": "pytest-coverage",
+            "author": "aldelar",
+            "description": "Run pytest tests with coverage, discover lines missing coverage, and increase\ncoverage to 100%. Use when:\n- Measuring test coverage for a module\n- Finding untested code paths\n- Improving coverage for a specific service",
+            "githubUrl": "https://github.com/aldelar/context-aware-vision-grounded-kb-agent/tree/main/.github/skills/pytest-coverage",
+            "skillUrl": "https://skillsmp.com/skills/aldelar-context-aware-vision-grounded-kb-agent-github-skills-pytest-coverage-skill-md",
+            "stars": 7,
+            "updatedAt": "1774909726"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "pytest coverage",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "72d17d57-afbb-46dc-b56f-1f2a75d55a00",
+        "responseTimeMs": 480
+      }
+    },
+    "expires_at": 1777678508.7864673,
+    "cached_at": 1777677908.7864673
+  },
+  "out:python-testing-patterns": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "sickn33-antigravity-awesome-skills-plugins-antigravity-awesome-skills-claude-skills-python-testing-patterns-skill-md",
+            "name": "python-testing-patterns",
+            "author": "sickn33",
+            "description": "Implement comprehensive testing strategies with pytest, fixtures, mocking, and test-driven development. Use when writing Python tests, setting up test suites, or implementing testing best practices.",
+            "githubUrl": "https://github.com/sickn33/antigravity-awesome-skills/tree/main/plugins/antigravity-awesome-skills-claude/skills/python-testing-patterns",
+            "skillUrl": "https://skillsmp.com/skills/sickn33-antigravity-awesome-skills-plugins-antigravity-awesome-skills-claude-skills-python-testing-patterns-skill-md",
+            "stars": 35521,
+            "updatedAt": "1776118482"
+          },
+          {
+            "id": "wshobson-agents-plugins-python-development-skills-python-testing-patterns-skill-md",
+            "name": "python-testing-patterns",
+            "author": "wshobson",
+            "description": "Implement comprehensive testing strategies with pytest, fixtures, mocking, and test-driven development. Use when writing Python tests, setting up test suites, or implementing testing best practices.",
+            "githubUrl": "https://github.com/wshobson/agents/tree/main/plugins/python-development/skills/python-testing-patterns",
+            "skillUrl": "https://skillsmp.com/skills/wshobson-agents-plugins-python-development-skills-python-testing-patterns-skill-md",
+            "stars": 34473,
+            "updatedAt": "1774489923"
+          },
+          {
+            "id": "rmyndharis-antigravity-skills-skills-python-testing-patterns-skill-md",
+            "name": "python-testing-patterns",
+            "author": "rmyndharis",
+            "description": "Implement comprehensive testing strategies with pytest, fixtures, mocking, and test-driven development. Use when writing Python tests, setting up test suites, or implementing testing best practices.",
+            "githubUrl": "https://github.com/rmyndharis/antigravity-skills/tree/main/skills/python-testing-patterns",
+            "skillUrl": "https://skillsmp.com/skills/rmyndharis-antigravity-skills-skills-python-testing-patterns-skill-md",
+            "stars": 688,
+            "updatedAt": "1768724076"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "python testing patterns",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "c71c5593-310b-4451-9ee1-3fb09981f19a",
+        "responseTimeMs": 471
+      }
+    },
+    "expires_at": 1777678509.9391851,
+    "cached_at": 1777677909.9391851
+  },
+  "out:spring-boot-testing": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-spring-boot-testing-skill-md",
+            "name": "spring-boot-testing",
+            "author": "github",
+            "description": "Expert Spring Boot 4 testing specialist that selects the best Spring Boot testing techniques for your situation with Junit 6 and AssertJ.",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/spring-boot-testing",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-spring-boot-testing-skill-md",
+            "stars": 31506,
+            "updatedAt": "1773962677"
+          },
+          {
+            "id": "hoangnguyen0403-agent-skills-standard-skills-spring-boot-spring-boot-testing-skill-md",
+            "name": "spring-boot-testing",
+            "author": "HoangNguyen0403",
+            "description": "Write unit, integration, and slice tests for Spring Boot 3 applications. Use when writing unit tests, integration tests, or slice tests for Spring Boot 3 applications.",
+            "githubUrl": "https://github.com/HoangNguyen0403/agent-skills-standard/tree/develop/skills/spring-boot/spring-boot-testing",
+            "skillUrl": "https://skillsmp.com/skills/hoangnguyen0403-agent-skills-standard-skills-spring-boot-spring-boot-testing-skill-md",
+            "stars": 438,
+            "updatedAt": "1776835389"
+          },
+          {
+            "id": "pramoddutta-qaskills-seed-skills-spring-boot-testing-skill-md",
+            "name": "spring-boot-testing",
+            "author": "PramodDutta",
+            "description": "Spring Boot application testing with @SpringBootTest, MockMvc, @DataJpaTest, Testcontainers, and Spring Security testing patterns.",
+            "githubUrl": "https://github.com/PramodDutta/qaskills/tree/main/seed-skills/spring-boot-testing",
+            "skillUrl": "https://skillsmp.com/skills/pramoddutta-qaskills-seed-skills-spring-boot-testing-skill-md",
+            "stars": 109,
+            "updatedAt": "1772161257"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "spring boot testing",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "3fe58e5e-e84a-4377-9ea9-d5c1938c3527",
+        "responseTimeMs": 495
+      }
+    },
+    "expires_at": 1777678511.135133,
+    "cached_at": 1777677911.135133
+  },
+  "out:unit-test-vue-pinia": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "github-awesome-copilot-skills-unit-test-vue-pinia-skill-md",
+            "name": "unit-test-vue-pinia",
+            "author": "github",
+            "description": "Write and review unit tests for Vue 3 + TypeScript + Vitest + Pinia codebases. Use when creating or updating tests for components, composables, and stores; mocking Pinia with createTestingPinia; applying Vue Test Utils patterns; and enforcing black-box assertions over implementation details.",
+            "githubUrl": "https://github.com/github/awesome-copilot/tree/main/skills/unit-test-vue-pinia",
+            "skillUrl": "https://skillsmp.com/skills/github-awesome-copilot-skills-unit-test-vue-pinia-skill-md",
+            "stars": 31506,
+            "updatedAt": "1773617976"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-github-awesome-copilot-unit-test-vue-pinia-skill-md",
+            "name": "unit-test-vue-pinia",
+            "author": "ComeOnOliver",
+            "description": "Write and review unit tests for Vue 3 + TypeScript + Vitest + Pinia codebases. Use when creating or updating tests for components, composables, and stores; mocking Pinia with createTestingPinia; applying Vue Test Utils patterns; and enforcing black-box assertions over implementation details.",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/github/awesome-copilot/unit-test-vue-pinia",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-github-awesome-copilot-unit-test-vue-pinia-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          },
+          {
+            "id": "beel-collab-presets-vuejs-unit-test-vue-pinia-skill-md",
+            "name": "unit-test-vue-pinia",
+            "author": "beel-collab",
+            "description": "Write and review unit tests for Vue 3 + TypeScript + Vitest + Pinia codebases. Use when creating or updating tests for components, composables, and stores; mocking Pinia with createTestingPinia; applying Vue Test Utils patterns; and enforcing black-box assertions over implementation details.",
+            "githubUrl": "https://github.com/beel-collab/presets/tree/main/vuejs/unit-test-vue-pinia",
+            "skillUrl": "https://skillsmp.com/skills/beel-collab-presets-vuejs-unit-test-vue-pinia-skill-md",
+            "stars": 4,
+            "updatedAt": "1773753228"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "unit test vue pinia",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "8f6722d3-b0b3-4ad9-91c1-20be83192fca",
+        "responseTimeMs": 484
+      }
+    },
+    "expires_at": 1777678512.2786696,
+    "cached_at": 1777677912.2786696
+  },
+  "out:vue-testing-best-practices": {
+    "data": {
+      "success": true,
+      "data": {
+        "skills": [
+          {
+            "id": "vuejs-ai-skills-skills-vue-testing-best-practices-skill-md",
+            "name": "vue-testing-best-practices",
+            "author": "vuejs-ai",
+            "description": "Use for Vue.js testing. Covers Vitest, Vue Test Utils, component testing, mocking, testing patterns, and Playwright for E2E testing.",
+            "githubUrl": "https://github.com/vuejs-ai/skills/tree/main/skills/vue-testing-best-practices",
+            "skillUrl": "https://skillsmp.com/skills/vuejs-ai-skills-skills-vue-testing-best-practices-skill-md",
+            "stars": 2313,
+            "updatedAt": "1769623004"
+          },
+          {
+            "id": "jetbrains-skills-vue-testing-best-practices-skill-md",
+            "name": "vue-testing-best-practices",
+            "author": "JetBrains",
+            "description": "Use for Vue.js testing. Covers Vitest, Vue Test Utils, component testing, mocking, testing patterns, and Playwright for E2E testing.",
+            "githubUrl": "https://github.com/JetBrains/skills/tree/main/vue-testing-best-practices",
+            "skillUrl": "https://skillsmp.com/skills/jetbrains-skills-vue-testing-best-practices-skill-md",
+            "stars": 48,
+            "updatedAt": "1777389291"
+          },
+          {
+            "id": "comeonoliver-skillshub-skills-antfu-skills-vue-testing-best-practices-skill-md",
+            "name": "vue-testing-best-practices",
+            "author": "ComeOnOliver",
+            "description": "Use for Vue.js testing. Covers Vitest, Vue Test Utils, component testing, mocking, testing patterns, and Playwright for E2E testing.",
+            "githubUrl": "https://github.com/ComeOnOliver/skillshub/tree/main/skills/antfu/skills/vue-testing-best-practices",
+            "skillUrl": "https://skillsmp.com/skills/comeonoliver-skillshub-skills-antfu-skills-vue-testing-best-practices-skill-md",
+            "stars": 33,
+            "updatedAt": "1774287824"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 3,
+          "total": 1000,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false,
+          "totalIsExact": false
+        },
+        "filters": {
+          "search": "vue testing best practices",
+          "sortBy": "stars"
+        }
+      },
+      "meta": {
+        "requestId": "9e715ed1-8403-460c-bd00-cee005944fe1",
+        "responseTimeMs": 479
+      }
+    },
+    "expires_at": 1777678513.465158,
+    "cached_at": 1777677913.465158
   }
 }

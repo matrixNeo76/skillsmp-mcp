@@ -545,6 +545,7 @@
             "github-copilot-starter",
             "link-craft",
             "mentoring-juniors",
+            "openrouter-cost-tracker",
             "risk-metrics-calculation",
             "template-skill",
             "update-markdown-file-index",
@@ -1151,9 +1152,9 @@
     }
   ],
   "_meta": {
-    "version": "1.2.0",
-    "last_refresh": "2026-05-01T21:46:15.121320",
-    "total_skills": 582,
+    "version": "1.4.0",
+    "last_refresh": "2026-05-02T01:17:49.216883",
+    "total_skills": 583,
     "domains": 17,
     "generated_by": "refresh_structure.py"
   }
