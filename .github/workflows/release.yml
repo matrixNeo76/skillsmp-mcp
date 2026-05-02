@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      discussions: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version from tag
+        id: tag
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Generate release notes
+        id: notes
+        run: |
+          # Estrai sezione CHANGELOG per questa versione
+          VERSION="${{ steps.tag.outputs.version }}"
+          VERSION="${VERSION#v}"
+          python3 -c "
+          import re
+          with open('CHANGELOG.md') as f:
+              content = f.read()
+          pattern = r'## \[' + re.escape(VERSION) + r'\](.*?)(?=## \[|\Z)'
+          m = re.search(pattern, content, re.DOTALL)
+          if m:
+              notes = m.group(1).strip()
+              with open('release_notes.md', 'w') as out:
+                  out.write(notes)
+          else:
+              with open('release_notes.md', 'w') as out:
+                  out.write('Release ${{ steps.tag.outputs.version }}')
+          "
+          echo "notes_path=release_notes.md" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: ${{ steps.notes.outputs.notes_path }}
+          name: SkillsMP MCP Server ${{ steps.tag.outputs.version }}
+          draft: false
+          prerelease: false
+          generate_release_notes: false

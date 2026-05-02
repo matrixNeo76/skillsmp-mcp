@@ -1,0 +1,21 @@
+# CODEOWNERS — Assegnazione automatica reviewer
+# 
+# Ogni match assegna automaticamente il reviewer alla PR.
+# Ordinare dal piu' specifico al meno specifico.
+
+# Owner principale
+*                                       @matrixNeo76
+
+# Aree specifiche
+server.py                               @matrixNeo76
+server/                                 @matrixNeo76
+scripts/                                @matrixNeo76
+data/skill_structure.json               @matrixNeo76
+.github/workflows/test.yml              @matrixNeo76
+.github/workflows/release.yml           @matrixNeo76
+README.md                               @matrixNeo76
+ARCHITECTURE.md                         @matrixNeo76
+AGENTS.md                               @matrixNeo76
+CHANGELOG.md                            @matrixNeo76
+pyproject.toml                          @matrixNeo76
+VERSION                                 @matrixNeo76

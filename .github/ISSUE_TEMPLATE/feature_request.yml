@@ -1,0 +1,42 @@
+name: Feature Request
+description: Proponi una nuova funzionalita per SkillsMP MCP Server
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Grazie per il tuo contributo! Descrivi la funzionalita che vorresti vedere.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema
+      description: Che problema risolverebbe questa funzionalita?
+      placeholder: "Quando uso skillsmp_search, mi manca la possibilita' di..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Soluzione proposta
+      description: Descrivi come vorresti che funzionasse
+      placeholder: "Un nuovo tool skillsmp_xxx che..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Esempi d'uso
+      description: Esempi concreti di come useresti questa funzionalita
+      placeholder: |
+        skillsmp_nuovo_tool( param1="valore", param2=123 )
+        # Risultato atteso: ...
+  - type: checkboxes
+    id: willing
+    attributes:
+      label: Contribuzione
+      options:
+        - label: Sono disposto a implementare questa funzionalita

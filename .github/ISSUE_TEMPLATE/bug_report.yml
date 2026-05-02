@@ -1,0 +1,76 @@
+name: Bug Report
+description: Segnala un problema con SkillsMP MCP Server
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Grazie per aver preso il tempo di segnalare un bug!
+
+  - type: input
+    id: version
+    attributes:
+      label: Versione
+      description: Quale versione del server stai usando? (dal file VERSION o dall'output di skillsmp_status)
+      placeholder: "es. 1.4.1"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descrizione
+      description: Descrivi il problema in modo chiaro e conciso
+      placeholder: "skillsmp_check_skill restituisce errore quando..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Passi per riprodurre
+      description: Passaggi per riprodurre il comportamento
+      placeholder: |
+        1. Chiama skillsmp_search con...
+        2. Ottieni risposta...
+        3. Errore: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamento atteso
+      description: Cosa ti aspettavi che accadesse?
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Output di skillsmp_status
+      description: Incolla l'output completo di skillsmp_status
+      render: json
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Sistema operativo
+      options:
+        - Windows
+        - macOS
+        - Linux
+    validations:
+      required: true
+
+  - type: dropdown
+    id: python
+    attributes:
+      label: Versione Python
+      options:
+        - "3.11"
+        - "3.12"
+        - "3.13"
+    validations:
+      required: true
