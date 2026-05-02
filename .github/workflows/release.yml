@@ -44,7 +44,7 @@ jobs:
           echo "notes_path=release_notes.md" >> $GITHUB_OUTPUT
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           body_path: ${{ steps.notes.outputs.notes_path }}
           name: SkillsMP MCP Server ${{ steps.tag.outputs.version }}
